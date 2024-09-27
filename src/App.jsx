@@ -12,6 +12,7 @@ function App() {
   };
   const handleClickCounter = () => {
     setCounter(counter + 1);
+    console.log('teste');
   };
   return (
     <div className="App">
