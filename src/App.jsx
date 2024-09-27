@@ -9,6 +9,7 @@ function App() {
   const reverseClass = reverse ? 'reverse' : '';
   const handleClick = () => {
     setReverse(!reverse);
+    console.log('teste commit')
   };
   const handleClickCounter = () => {
     setCounter(counter + 1);
