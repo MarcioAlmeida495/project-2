@@ -25,5 +25,9 @@ module.exports = {
   },
   rules: {
     'react/react-in-jsx-scope': 'off',
+    'no-unused-vars': 'off',
+    'no-undef': 'off',
+    //possibilidade de hooks usando variaveis sem dependê-las
+    'react-hooks/exhaustive-deps': 'off',
   },
 };

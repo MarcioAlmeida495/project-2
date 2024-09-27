@@ -1,28 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
 import { ButtonReverse } from './Components/Button/ButtonReverse';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
-  const [reverse, setReverse] = useState(false);
   const [counter, setCounter] = useState(0);
-  const reverseClass = reverse ? 'reverse' : '';
-  const handleClick = () => {
-    setReverse(!reverse);
-    console.log('teste commit');
-  };
-  const handleClickCounter = () => {
-    setCounter(counter + 1);
-    console.log('teste');
-  };
+  const [counter2, setCounter2] = useState(10);
+  useEffect(() => {
+    console.log(counter2);
+  }, [counter]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className={`App-logo ${reverseClass}`} alt="logo" />
-        <h1>{`Contador: ${counter}`}</h1>
-        <ButtonReverse onClick={handleClick} text="Click To Reverse Spin" />
-        <ButtonReverse onClick={handleClickCounter} text="Click To Increment" />
-      </header>
+      <h1>Contador: {counter}</h1>
+      <h1>Contador2: {counter2}</h1>
+      <button onClick={() => setCounter(counter + 1)}>Increment</button>
+      <button onClick={() => setCounter2(counter2 + 2)}>Increment</button>
     </div>
   );
 }
