@@ -1,58 +1,85 @@
 /* eslint-disable prettier/prettier */
-import logo from './logo.svg';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import './App.css';
-import { ButtonReverse } from './Components/Button/ButtonReverse';
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import p from 'prop-types';
+import { LoadingIcon } from './Components/Loading/LoadingIcon';
+import p from 'prop-types'
 
-const ComponentButton = React.memo(function Button ({fn, num, text}) {
-  console.log(fn);
-  return <button  onClick={() => fn(num)}>{text}</ button>
-})
+var counter = 0;
+var bool = false;
 
-ComponentButton.propTypes = {
+const Post = ({ post, fn }) => {
+  console.log('filho Renderizou');
+  return (
+    <div className='post' key={post.id}>
+      <h1 onClick={() => fn(post.title)} >{post.title}</h1>
+      <p>{post.body}</p>
+    </div>
+    )
+}
+
+Post.propTypes = {
+  post: p.shape({
+    id: p.number,
+    title: p.string,
+    body: p.string,
+  },
+  ),
   fn: p.func,
-  text: p.string,
-  num: p.number,
 }
 
-const ComponentMemorizado = ({fn, num, text}) => {
-  return <button  onClick={() => fn(num)}>{text}</ button>
-}
-ComponentMemorizado.propTypes = {
-  fn: p.func,
-  text: p.string,
-  num: p.number,
-}
-function App() {
-  const [counter, setCounter] = useState(1);
-  const [counter2, setCounter2] = useState(10);
+function App () {
+  const [Posts, setPosts] = useState([]);
+  const [value, setValue] = useState('');
+  const input = useRef(null);
+
+  console.log('Pai renderizou', counter);
+  counter++;
+  bool = !bool;
 
   useEffect(() => {
-    console.log(counter);
-  }, [counter]);
+    console.log(input.current);
+    input.current.focus();
+  }, [value])
 
-  useEffect(() => {
-  });
+  useEffect(()=>{
+    bool ? console.log('tudo feito') : console.log('nada feito')
 
-  const handleClick = useCallback((value)=>{
-    setCounter((counter) => counter + value);
-  }, []);
+  },[counter])
 
-  const btn = useMemo( () =>  ComponentMemorizado(handleClick, 10, "fodaci"));
+  useEffect(()=>{
+    setTimeout(() => {
+      fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response =>
+        response.json()
+          .then(Posts => {
+            setPosts(Posts);
+          })
+      )
+    }, 5000);
+
+  },[]);
+
+  const getTitle = (text) => {
+    text ? setValue(text) : console.log('Nenhum Texto')
+  }
 
   return (
     <div className="App">
-      <h1 id="myH1">Contador: {counter}</h1>
-      <h1>Contador2: {counter2}</h1>
+      <input ref={input} type="search" value={value} onChange={(e) => setValue(e.target.value)} />
+      {useMemo(()=>{
+        return Posts.length > 0 &&
+        Posts.map( post => {
+          return (
+            <Post key={post.id} post={post} fn={getTitle} />
+          )}
+        )
+      }, [Posts])}
 
-      <button onClick={() => setCounter(counter*2)}>NoIncrement</button>
-      <button onClick={() => setCounter(counter + 1)}>Increment</button>
-      <button onClick={() => setCounter2(counter2 + 2)}>Increment</button>
-      <ComponentButton fn={handleClick} num={10} text="Mazio" />
-      {useMemo(() => <ComponentButton fn={handleClick} num={10} text="Mazio" />)}
+      {Posts.length <= 0 &&
+        <LoadingIcon />
+      }
     </div>
-  );
+  )
 }
 
 export default App;
