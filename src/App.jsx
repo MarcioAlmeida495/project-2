@@ -1,85 +1,57 @@
 /* eslint-disable prettier/prettier */
-import { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
 import './App.css';
 import { LoadingIcon } from './Components/Loading/LoadingIcon';
 import p from 'prop-types'
 
-var counter = 0;
-var bool = false;
+const globalState = {
+  title: 'Título do Contexto',
+  body: 'o Body do Contexto',
+  counter: 0,
+}
+const GlobalContext = React.createContext();
 
-const Post = ({ post, fn }) => {
-  console.log('filho Renderizou');
+// eslint-disable-next-line
+const Div = () => {
   return (
-    <div className='post' key={post.id}>
-      <h1 onClick={() => fn(post.title)} >{post.title}</h1>
-      <p>{post.body}</p>
-    </div>
-    )
+    <>
+      <Input onChange={handleKeyPressed}/>
+      <H1 />
+      <P />
+    </>
+  )
+}
+// eslint-disable-next-line
+const H1 = () => {
+  const theContext = useContext(GlobalContext);
+  return <h1>{theContext.contextState.title}</h1>
 }
 
-Post.propTypes = {
-  post: p.shape({
-    id: p.number,
-    title: p.string,
-    body: p.string,
-  },
-  ),
-  fn: p.func,
+// eslint-disable-next-line
+const Input = ({fn}) => {
+  const theContext = useContext(GlobalContext);
+  return <input type='text' onChange={() => fn()} />
+}
+
+const handleKeyPressed = ({text}) => {
+  // eslint-disable-next-line
+  const theContext = useContext(GlobalContext);
+  theContext.setContextState(theContext.globalState.title= {text});
+}
+// eslint-disable-next-line
+const P = () => {
+  const theContext = useContext(GlobalContext);
+  return <p>{theContext.contextState.body}</p>
 }
 
 function App () {
-  const [Posts, setPosts] = useState([]);
-  const [value, setValue] = useState('');
-  const input = useRef(null);
-
-  console.log('Pai renderizou', counter);
-  counter++;
-  bool = !bool;
-
-  useEffect(() => {
-    console.log(input.current);
-    input.current.focus();
-  }, [value])
-
-  useEffect(()=>{
-    bool ? console.log('tudo feito') : console.log('nada feito')
-
-  },[counter])
-
-  useEffect(()=>{
-    setTimeout(() => {
-      fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response =>
-        response.json()
-          .then(Posts => {
-            setPosts(Posts);
-          })
-      )
-    }, 5000);
-
-  },[]);
-
-  const getTitle = (text) => {
-    text ? setValue(text) : console.log('Nenhum Texto')
-  }
-
+  const [contextState, setContextState] = useState(globalState);
   return (
-    <div className="App">
-      <input ref={input} type="search" value={value} onChange={(e) => setValue(e.target.value)} />
-      {useMemo(()=>{
-        return Posts.length > 0 &&
-        Posts.map( post => {
-          return (
-            <Post key={post.id} post={post} fn={getTitle} />
-          )}
-        )
-      }, [Posts])}
-
-      {Posts.length <= 0 &&
-        <LoadingIcon />
-      }
-    </div>
+    <GlobalContext.Provider value={{contextState, setContextState}}>
+      <Div />
+    </GlobalContext.Provider>
   )
 }
 
 export default App;
+
