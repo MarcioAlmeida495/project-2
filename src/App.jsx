@@ -3,11 +3,14 @@ import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
 import './App.css';
 import { LoadingIcon } from './Components/Loading/LoadingIcon';
 import p from 'prop-types'
+import DataContainer from './Components/DataContainer/DataContainer';
+import InputSearch from './Components/Inputs/InputSearch';
 
 const globalState = {
   title: 'Título do Contexto',
   body: 'o Body do Contexto',
   counter: 0,
+  value:'',
 }
 const GlobalContext = React.createContext();
 
@@ -15,7 +18,7 @@ const GlobalContext = React.createContext();
 const Div = () => {
   return (
     <>
-      <Input onChange={handleKeyPressed}/>
+      <Input/>
       <H1 />
       <P />
     </>
@@ -27,28 +30,34 @@ const H1 = () => {
   return <h1>{theContext.contextState.title}</h1>
 }
 
+
+
 // eslint-disable-next-line
 const Input = ({fn}) => {
   const theContext = useContext(GlobalContext);
-  return <input type='text' onChange={() => fn()} />
+  return <input type='text' value={theContext.contextState.title} onChange={() => fn(text)} />
 }
 
-const handleKeyPressed = ({text}) => {
-  // eslint-disable-next-line
-  const theContext = useContext(GlobalContext);
-  theContext.setContextState(theContext.globalState.title= {text});
-}
 // eslint-disable-next-line
 const P = () => {
   const theContext = useContext(GlobalContext);
   return <p>{theContext.contextState.body}</p>
 }
 
+const handleChange = () => {
+
+}
+
 function App () {
   const [contextState, setContextState] = useState(globalState);
+
   return (
     <GlobalContext.Provider value={{contextState, setContextState}}>
-      <Div />
+      <div className='pageBody'>
+        <Div />
+        <InputSearch />
+        <DataContainer search='Marcio Almeida' />
+      </div>
     </GlobalContext.Provider>
   )
 }
