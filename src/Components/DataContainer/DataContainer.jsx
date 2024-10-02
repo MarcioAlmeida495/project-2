@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useEffect, useState } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
