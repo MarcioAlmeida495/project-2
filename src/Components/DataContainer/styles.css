@@ -8,7 +8,6 @@
   overflow: auto;          /* Esconde overflow do conteúdo */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Espaça o conteúdo */
 }
 
 .card-header {

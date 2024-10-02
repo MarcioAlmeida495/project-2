@@ -44,19 +44,24 @@ const P = () => {
   return <p>{theContext.contextState.body}</p>
 }
 
-const handleChange = () => {
 
-}
 
 function App () {
   const [contextState, setContextState] = useState(globalState);
+  const [value, setValue] = useState("Marcio Almeida");
+
+  const handleKeyUp = (e, value) => {
+    e.key === 'Enter' ? setValue(value) : console.log(e.key);
+
+  };
 
   return (
     <GlobalContext.Provider value={{contextState, setContextState}}>
       <div className='pageBody'>
-        <Div />
-        <InputSearch />
-        <DataContainer search='Marcio Almeida' />
+        <div className='content'>
+          <InputSearch onKeyUp={handleKeyUp}/>
+          <DataContainer search={value} />
+        </div>
       </div>
     </GlobalContext.Provider>
   )

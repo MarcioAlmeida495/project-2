@@ -1,10 +1,11 @@
 
 /* Adicione essas regras ao contêiner */
 .container {
+  margin: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Define a altura da tela toda */
+  height: 100px; /* Define a altura da tela toda */
 }
 
 .lds-ring,
@@ -21,8 +22,8 @@
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 64px;
-  height: 64px;
+  width: 45px;
+  height: 45px;
   margin: 8px;
   border: 2px solid currentColor;
   border-radius: 50%;
