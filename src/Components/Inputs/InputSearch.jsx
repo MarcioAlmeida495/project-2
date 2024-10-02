@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import "./styles.css";
 import PropTypes from 'prop-types';
 

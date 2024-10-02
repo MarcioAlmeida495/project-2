@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
 import './App.css';
 import { LoadingIcon } from './Components/Loading/LoadingIcon';
