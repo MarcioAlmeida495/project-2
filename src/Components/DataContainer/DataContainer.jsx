@@ -29,7 +29,7 @@ function DataContainer({ search }) {
     console.log('AQUI??!?!?!');
     setIsLoading(true); // Inicia o carregamento
 
-    fetch('http://localhost:8080/fetch', init)
+    fetch('https://vendaappxxx-1.onrender.com/fetch', init)
       .then((r) => r.json())
       .then((r) => {
         const data = Object.values(r);
