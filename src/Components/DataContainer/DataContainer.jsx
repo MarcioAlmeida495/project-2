@@ -23,18 +23,19 @@ function DataContainer({search}) {
   console.log(search)
   var data = [];
   const [text, setText] = useState('Textando');
-
   const loading = LoadingIcon();
 
   init.body = JSON.stringify({name: search});
-  console.log(init)
+  console.log(init);
   useEffect(()=>{
+    console.log('AQUI??!?!?!');
     fetch('http://localhost:8080/fetch', init)
       .then(r=> r.json()
       .then(r => {
         data = Object.values(r);
         var arr = data[0].split(/\r?\n/);
         console.log(arr);
+        console.log(data)
         if(data)bool = !bool;
         setText(data);
       }));

@@ -51,7 +51,9 @@ function App () {
   const [value, setValue] = useState("Marcio Almeida");
 
   const handleKeyUp = (e, value) => {
-    e.key === 'Enter' ? setValue(value) : console.log(e.key);
+    if(e.key === 'Enter') {
+      setValue(value);
+    }
 
   };
 
