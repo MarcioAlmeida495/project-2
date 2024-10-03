@@ -3,9 +3,11 @@
 
 }
 .pageBody{
-  padding: 20px;
+  padding: 10px;
 }
 .content{
-  width: 200px;
-  height: 400px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 30px;
+  padding: 20px;
 }

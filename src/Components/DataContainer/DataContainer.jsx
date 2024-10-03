@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
 import { LoadingIcon } from '../Loading/LoadingIcon';
+import InputSearch from '../Inputs/InputSearch';
+
+const URL = 'https://vendaappxxx-1.onrender.com/fetch';
 
 var init = {
   method: 'POST', // Método HTTP (pode ser 'GET', 'POST', 'PUT', 'DELETE', etc.)
@@ -11,16 +14,16 @@ var init = {
   },
   body: JSON.stringify({                // Corpo da requisição (no caso de POST/PUT)
     nome: 'Matheus',
-    idade: 30
   })
 };
 
-function DataContainer({ search }) {
+function DataContainer() {
   console.log('dataContainer renderizou');
 
   // Estado para controlar o texto e o carregamento
   const [text, setText] = useState('Textando');
   const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
+  const [search, setSearch] = useState('Marcio Almeida');
   const loading = LoadingIcon();
 
   init.body = JSON.stringify({ name: search });
@@ -29,7 +32,7 @@ function DataContainer({ search }) {
     console.log('AQUI??!?!?!');
     setIsLoading(true); // Inicia o carregamento
 
-    fetch('https://vendaappxxx-1.onrender.com/fetch', init)
+    fetch(URL, init)
       .then((r) => r.json())
       .then((r) => {
         const data = Object.values(r);
@@ -45,8 +48,15 @@ function DataContainer({ search }) {
     console.log('Texto alterado:', text);
   }, [text]);
 
+  const handleKeyUp = (e, value) => {
+    if(e.key === 'Enter') {
+      setSearch(value);
+    }
+
+  };
   return (
     <div className="card">
+      <InputSearch onKeyUp={handleKeyUp}/>
       <h4 className="card-header">{search}</h4>
       {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
       <div className="card-context">{isLoading ? loading : text}</div>
@@ -57,5 +67,5 @@ function DataContainer({ search }) {
 export default DataContainer;
 
 DataContainer.propTypes = {
-  search: PropTypes.string.isRequired,
+  search: PropTypes.string,
 };

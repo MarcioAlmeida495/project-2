@@ -4,6 +4,7 @@ import { LoadingIcon } from './Components/Loading/LoadingIcon';
 import p from 'prop-types'
 import DataContainer from './Components/DataContainer/DataContainer';
 import InputSearch from './Components/Inputs/InputSearch';
+import ButtonAddDataContainer from './Components/ButtonAddDataContainer/ButtonAddDataContainer';
 
 const globalState = {
   title: 'Título do Contexto',
@@ -13,55 +14,31 @@ const globalState = {
 }
 const GlobalContext = React.createContext();
 
-// eslint-disable-next-line
-const Div = () => {
-  return (
-    <>
-      <Input/>
-      <H1 />
-      <P />
-    </>
-  )
+const dataModel = {
+  dataComponent: <DataContainer/>,
+  id: 0,
 }
-// eslint-disable-next-line
-const H1 = () => {
-  const theContext = useContext(GlobalContext);
-  return <h1>{theContext.contextState.title}</h1>
-}
-
-
-
-// eslint-disable-next-line
-const Input = ({fn}) => {
-  const theContext = useContext(GlobalContext);
-  return <input type='text' value={theContext.contextState.title} onChange={() => fn(text)} />
-}
-
-// eslint-disable-next-line
-const P = () => {
-  const theContext = useContext(GlobalContext);
-  return <p>{theContext.contextState.body}</p>
-}
-
-
 
 function App () {
   const [contextState, setContextState] = useState(globalState);
-  const [value, setValue] = useState("Marcio Almeida");
+  const [datasContainer, setDatasContainer] = useState([<DataContainer key={0}/>]);
 
-  const handleKeyUp = (e, value) => {
-    if(e.key === 'Enter') {
-      setValue(value);
-    }
+  const addNewDataContainer = () => {
+    setDatasContainer([...datasContainer, <DataContainer key={datasContainer.length}/>]);
+    console.log(datasContainer);
+    console.log('teste');
+  }
 
-  };
+  const teste = () => {
+    console.log('teste')
+  }
 
   return (
     <GlobalContext.Provider value={{contextState, setContextState}}>
       <div className='pageBody'>
         <div className='content'>
-          <InputSearch onKeyUp={handleKeyUp}/>
-          <DataContainer search={value} />
+          {datasContainer.map((data) => data)}
+          <ButtonAddDataContainer AddDataContainer={addNewDataContainer}/>
         </div>
       </div>
     </GlobalContext.Provider>

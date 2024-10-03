@@ -1,13 +1,15 @@
 .card {
-  width: 200px;
+  padding: 5px;
+  width: 100%;
   height: 500px;
-  background-color: #f8f9fa; /* Cor de fundo */
+  background-color: #f8f9fae3; /* Cor de fundo */
   border: 1px solid #ddd;    /* Borda fina */
   border-radius: 2px;       /* Bordas arredondadas */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidade */
   overflow: auto;          /* Esconde overflow do conteúdo */
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .card-header {
@@ -20,6 +22,8 @@
 
 .card-context{
   overflow: auto;
+  background-color: white;
+  height: 100%;
 }
 /* Aplica a estilização na barra de rolagem de todos os elementos */
 ::-webkit-scrollbar {
