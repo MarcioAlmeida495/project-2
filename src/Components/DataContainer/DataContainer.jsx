@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { LoadingIcon } from '../Loading/LoadingIcon';
 import InputSearch from '../Inputs/InputSearch';
 
-const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
-const URL = 'http://localhost:8080/fetch';
+const URL = 'https://vendaappxxx-1.onrender.com/fetch';
+const URL2 = 'http://localhost:8080/fetch';
 const URLedit = 'http://localhost:8080/API/edicoes';
 const URLbuy = 'http://localhost:8080/API/compra';
 
