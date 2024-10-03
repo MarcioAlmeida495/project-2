@@ -6,7 +6,8 @@ import InputSearch from '../Inputs/InputSearch';
 
 const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
 const URL = 'http://localhost:8080/fetch';
-const URLedit = 'http://localhost:8080/edicoes';
+const URLedit = 'http://localhost:8080/API/edicoes';
+const URLbuy = 'http://localhost:8080/API/compra';
 
 var init = {
   method: 'POST', // Método HTTP (pode ser 'GET', 'POST', 'PUT', 'DELETE', etc.)
