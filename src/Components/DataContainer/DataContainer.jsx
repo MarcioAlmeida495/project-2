@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import { LoadingIcon } from '../Loading/LoadingIcon';
 import InputSearch from '../Inputs/InputSearch';
 
-const URL = 'https://vendaappxxx-1.onrender.com/fetch';
+const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
+const URL = 'http://localhost:8080/fetch';
+const URLedit = 'http://localhost:8080/edicoes';
 
 var init = {
   method: 'POST', // Método HTTP (pode ser 'GET', 'POST', 'PUT', 'DELETE', etc.)
@@ -27,6 +29,19 @@ function DataContainer() {
   const loading = LoadingIcon();
 
   init.body = JSON.stringify({ name: search });
+
+  const fetchEdicoes = () => {
+    fetch(URLedit, init)
+    .then((r) => r.json())
+    .then((r) => {
+      const data = Object.values(r);
+      const arr = data[0].split(/\r?\n/);
+
+      console.log('Dados recebidos:', data);
+      setText(data); // Define os dados recebidos como texto
+      setIsLoading(false); // Termina o carregamento
+    })
+  }
 
   useEffect(() => {
     console.log('AQUI??!?!?!');
@@ -54,12 +69,19 @@ function DataContainer() {
     }
 
   };
+  const handleKeyUpBuy = (e, value) => {
+    if(e.key === 'Enter') {
+      setSearch(value);
+    }
+
+  };
   return (
     <div className="card">
       <InputSearch onKeyUp={handleKeyUp}/>
       <h4 className="card-header">{search}</h4>
       {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
       <div className="card-context">{isLoading ? loading : text}</div>
+      <button onClick={() => fetchEdicoes()}>edicoes</button>
     </div>
   );
 }
