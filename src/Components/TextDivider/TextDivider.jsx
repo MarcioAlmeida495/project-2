@@ -2,9 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './styles.css'; // Importa o arquivo CSS
 
+
+
 const TextDivider = ({ text }) => {
   const containerRef = useRef(null); // Cria a referência do container
-
+  var total = 0.00;
   // Função para rolar com animação
   const smoothScrollToBottom = () => {
     const container = containerRef.current;

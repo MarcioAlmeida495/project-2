@@ -29,5 +29,6 @@ module.exports = {
     //possibilidade de hooks usando variaveis sem dependê-las
     'react-hooks/exhaustive-deps': 'off',
     'react/no-unknown-property': 'off',
+    'no-useless-escape': 'off',
   },
 };

@@ -9,3 +9,20 @@
   border: 2px solid white;
   border-radius: 10px;
 }
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.blinking {
+  animation: blink 1s infinite; /* Faz o input piscar */
+}
+

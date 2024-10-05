@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
@@ -9,6 +10,46 @@ const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
 const URL = 'http://localhost:80/fetch';
 const URLedit = 'http://localhost:80/API/edicoes';
 const URLbuy = 'http://localhost:80/API/compra';
+
+// const math = require('mathjs');
+
+// function calcularExpressao(expressao) {
+//   try {
+//     const resultado = math.evaluate(expressao);
+//     return resultado;
+//   } catch (error) {
+//     return "Expressão inválida!";
+//   }
+// }
+
+function calcularTotal(texto) {
+  var total = '0.00'; // Inicializando total como um número, não como uma string.
+  var auxtext = texto.replaceAll(',', '.');
+  const arr = auxtext.split(/[ ;\n]+/);
+
+  arr.map((element) => {
+    if (/[.,]/.test(element)) {
+      var evalValue;
+      try {
+        console.log('ELEMENT: ', element);
+        evalValue = eval(element);
+        console.log('dps do Eval', evalValue);
+
+      } catch (error) {
+        evalValue = '0.00';
+      }
+      var elementValue = parseFloat(evalValue); // Converte o valor em float
+      if (!isNaN(elementValue)) {
+        total += ' + ' + elementValue; // Soma o valor diretamente ao total
+        console.log(total);
+      }
+    }
+  });
+  console.log('TESTANDO EVAL', eval('0 + 10 * 5 + 2'));
+  total = eval(total);
+  console.log(`Total final: ${total}`);
+  return total;
+}
 
 var init = {
   method: 'POST', // Método HTTP (pode ser 'GET', 'POST', 'PUT', 'DELETE', etc.)
@@ -39,6 +80,7 @@ function DataContainer() {
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
   const [search, setSearch] = useState('Marcio Almeida');
+  const [total, setTotal] = useState(0.00);
   const loading = LoadingIcon();
   const refContext = useRef(null);
 
@@ -67,12 +109,13 @@ function DataContainer() {
 
         console.log('Dados recebidos:', data);
         setText(data[0]); // Define os dados recebidos como texto
+        setTotal(calcularTotal(data[0]));
         setIsLoading(false); // Termina o carregamento
       });
   }, [search]);
 
   useEffect(() => {
-    console.log('Texto alterado:', text);
+    //console.log('Texto alterado:', text);
   }, [text]);
 
   const handleKeyUp = (e, value) => {
@@ -93,6 +136,7 @@ function DataContainer() {
       <h4 className="card-header">{search}</h4>
       {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
       <div className="card-context">{isLoading ? loading : <TextDivider text={text}/>}</div>
+      <div className='showTotal'>{`Valor Total: ${total}`}</div>
       <button onClick={() => {fetchEdicoes({name:'Marcio', id:'001'})}}>edicoes</button>
     </div>
   );

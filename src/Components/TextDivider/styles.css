@@ -10,6 +10,6 @@
   width: 100%; /* Cada linha ocupa 100% da largura da div pai */
   margin: 0;
   padding: 5px 0;
-  border-bottom: 1px solid #ccc; /* Linha opcional para separar cada parágrafo */
+  border-bottom: 2px solid #adacac; /* Linha opcional para separar cada parágrafo */
   box-sizing: border-box;
 }
