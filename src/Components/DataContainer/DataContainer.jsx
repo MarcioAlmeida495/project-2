@@ -136,7 +136,7 @@ function DataContainer() {
       <h4 className="card-header">{search}</h4>
       {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
       <div className="card-context">{isLoading ? loading : <TextDivider text={text}/>}</div>
-      <div className='showTotal'>{`Valor Total: ${total}`}</div>
+      <div className='showTotal'>{`Valor Total: ${total.toFixed(2)}`}</div>
       <button onClick={() => {fetchEdicoes({name:'Marcio', id:'001'})}}>edicoes</button>
     </div>
   );

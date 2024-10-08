@@ -2,9 +2,6 @@
   margin: 0px;
 
 }
-.pageBody{
-  padding: 10px;
-}
 .content{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));

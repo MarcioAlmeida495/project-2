@@ -5,6 +5,7 @@ import p from 'prop-types'
 import DataContainer from './Components/DataContainer/DataContainer';
 import InputSearch from './Components/Inputs/InputSearch';
 import ButtonAddDataContainer from './Components/ButtonAddDataContainer/ButtonAddDataContainer';
+import ClientsSection from './Components/ClientsSection/ClientsSection';
 
 const globalState = {
   title: 'Título do Contexto',
@@ -36,6 +37,7 @@ function App () {
   return (
     <GlobalContext.Provider value={{contextState, setContextState}}>
       <div className='pageBody'>
+        <ClientsSection />
         <div className='content'>
           {datasContainer.map((data) => data)}
           <ButtonAddDataContainer AddDataContainer={addNewDataContainer}/>
