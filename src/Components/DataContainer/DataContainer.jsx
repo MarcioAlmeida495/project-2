@@ -79,10 +79,12 @@ function DataContainer() {
   // Estado para controlar o texto e o carregamento
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
-  const [search, setSearch] = useState('Marcio Almeida');
+  const [search, setSearch] = useState(new Date().toLocaleDateString('pt-BR'));
   const [total, setTotal] = useState(0.00);
+  const [closeble, setCloseble] = useState(true);
   const loading = LoadingIcon();
   const refContext = useRef(null);
+  const refInput = useRef(null);
 
   init.body = JSON.stringify({ name: search });
 
@@ -132,7 +134,10 @@ function DataContainer() {
   };
   return (
     <div className="card">
-      <InputSearch onKeyUp={handleKeyUp}/>
+      <div style={{float: 'right'}}>
+        <input ref={refInput} onChange={() => {setCloseble(!closeble)}} type="checkbox" style={{float: 'right'}} />
+        {closeble ? <InputSearch onKeyUp={handleKeyUp}/> : <></>}
+      </div>
       <h4 className="card-header">{search}</h4>
       {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
       <div className="card-context">{isLoading ? loading : <TextDivider text={text}/>}</div>

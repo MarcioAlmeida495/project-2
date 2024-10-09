@@ -6,7 +6,7 @@ export function ButtonMenu({onClick}) {
 
   return (
     <>
-    <div className="container" onClick={onClick} >
+    <div className="containerButton" onClick={onClick} >
 
       <input type="checkbox" id="checkbox1" className="checkbox1 visuallyHidden"/>
       <label htmlFor="checkbox1">

@@ -23,7 +23,7 @@ const dataModel = {
 
 function App () {
   const [contextState, setContextState] = useState(globalState);
-  const [datasContainer, setDatasContainer] = useState([<DataContainer key={0}/>]);
+  const [datasContainer, setDatasContainer] = useState([]);
 
   const addNewDataContainer = () => {
     setDatasContainer([...datasContainer, <DataContainer key={datasContainer.length}/>]);

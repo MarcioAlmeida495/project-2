@@ -1,3 +1,5 @@
+
+
 .showTotal{
   width: 100%;
   font-size: 20px;
@@ -6,8 +8,7 @@
   text-decoration: bold;
   color: white;
   align-items: center;
-}
-.card {
+}.card {
   position: relative;
   padding: 5px;
   width: 100%;
@@ -18,10 +19,17 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidade */
   overflow: auto;          /* Esconde overflow do conteúdo */
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  /* Mantenha a direção como coluna */
   box-sizing: border-box;
   transition: transform 100ms ease-in-out;
 }
+
+.card-header {
+  display: flex; /* Altera para flexbox */
+  justify-content: space-between; /* Espaça os itens para as extremidades */
+  align-items: center; /* Alinha verticalmente os itens */
+}
+
 .card:hover{
   transform: scale(1.01);
 }

@@ -11,7 +11,7 @@ h1 {
   text-align: center;
 }
 
-.container {
+.containerButton {
   width: 70%;
   margin: 0 auto;
   display: flex;
@@ -19,11 +19,12 @@ h1 {
 }
 
 .hamburger {
+  float: right;
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 10px;
   width: 30px;
   height: 30px;
-  position: relative;
+  position: absolute;
 }
 
 .hamburger .bar {
