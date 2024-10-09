@@ -50,8 +50,8 @@ export default function ClientsSection () {
     <section ref={sectionRef} className={'ClientsSection'}>
       {/*<ButtonMenu onClick={Open} />*/}
       <button style={{float: 'right'}} onClick={Open}>x</button>
-      <InputSearch onKeyUp={onKeyUp} />
-      {clients.map((client, index) => {
+      {open && <InputSearch onKeyUp={onKeyUp} />}
+      {open && clients.map((client, index) => {
         if (client.length > 0 && client.toUpperCase().includes(value.toUpperCase())) {
           return <button className="clientsButton" key={index}>{client}</button>;
         }
