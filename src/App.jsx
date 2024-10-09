@@ -6,6 +6,7 @@ import DataContainer from './Components/DataContainer/DataContainer';
 import InputSearch from './Components/Inputs/InputSearch';
 import ButtonAddDataContainer from './Components/ButtonAddDataContainer/ButtonAddDataContainer';
 import ClientsSection from './Components/ClientsSection/ClientsSection';
+import { ButtonMenu } from './Components/Button/ButtonMenu';
 
 const globalState = {
   title: 'Título do Contexto',
@@ -36,6 +37,7 @@ function App () {
 
   return (
     <GlobalContext.Provider value={{contextState, setContextState}}>
+
       <div className='pageBody'>
         <ClientsSection />
         <div className='content'>
