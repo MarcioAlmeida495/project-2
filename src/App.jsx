@@ -24,9 +24,10 @@ const dataModel = {
 function App () {
   const [contextState, setContextState] = useState(globalState);
   const [datasContainer, setDatasContainer] = useState([]);
+  var refs = [];
 
   const addNewDataContainer = () => {
-    setDatasContainer([...datasContainer, <DataContainer key={datasContainer.length}/>]);
+    setDatasContainer([...datasContainer, <DataContainer refs={refs} key={datasContainer.length}/>]);
     console.log(datasContainer);
     console.log('teste');
   }
@@ -34,6 +35,10 @@ function App () {
   const teste = () => {
     console.log('teste')
   }
+
+  useEffect(()=>{
+    setDatasContainer([...datasContainer, <DataContainer refs={refs} key={datasContainer.length}/>]);
+  },[])
 
   return (
     <GlobalContext.Provider value={{contextState, setContextState}}>

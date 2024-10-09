@@ -1,4 +1,4 @@
-function calcularTotal(texto) {
+export function calcularTotal(texto) {
   var total = '0.00'; // Inicializando total como um número, não como uma string.
   var auxtext = texto.replaceAll(',', '.');
   const arr = auxtext.split(/[ ;\n]+/);
@@ -25,4 +25,26 @@ function calcularTotal(texto) {
   total = eval(total);
   console.log(`Total final: ${total}`);
   return total;
+}
+
+export var init = {
+  method: 'POST', // Método HTTP (pode ser 'GET', 'POST', 'PUT', 'DELETE', etc.)
+  headers: {
+    'Content-Type': 'application/json', // Tipo de conteúdo que estamos enviando
+    'Authorization': 'Bearer token'     // Exemplo de autenticação
+  },
+  body: JSON.stringify({                // Corpo da requisição (no caso de POST/PUT)
+    nome: 'Matheus',
+  })
+};
+
+export function formatData(body){
+  return init = {
+    method: 'POST', // Método HTTP (pode ser 'GET', 'POST', 'PUT', 'DELETE', etc.)
+    headers: {
+      'Content-Type': 'application/json', // Tipo de conteúdo que estamos enviando
+      'Authorization': 'Bearer token'     // Exemplo de autenticação
+    },
+    body: JSON.stringify(body)
+  }
 }

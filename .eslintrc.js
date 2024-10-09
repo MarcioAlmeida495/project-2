@@ -30,5 +30,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'off',
     'react/no-unknown-property': 'off',
     'no-useless-escape': 'off',
+    'react-hooks/rules-of-hooks': 'off',
   },
 };
