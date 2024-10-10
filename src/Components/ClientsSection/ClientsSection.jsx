@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import './styles.css';
-import { ButtonMenu } from "../Button/ButtonMenu"; // Assumindo que o ButtonMenu seja simples
+import { ButtonMenu } from "../Buttons/ButtonMenu"; // Assumindo que o ButtonMenu seja simples
+import { GlobalContext } from "../../App";
 import InputSearch from "../Inputs/InputSearch";
 
 function ordenarSemMaiusculas(array) {
@@ -8,6 +9,7 @@ function ordenarSemMaiusculas(array) {
 }
 
 export default function ClientsSection () {
+  const theContext = useContext(GlobalContext);
   const [open, setOpen] = useState(false);
   const [clients, setClients] = useState([]);
   const [value, setValue] = useState('');
@@ -15,6 +17,11 @@ export default function ClientsSection () {
 
   console.log('RENDERIZOU');
 
+  const handleSearch = (client) => {
+    console.log(theContext, client);
+    theContext.counter++;
+    theContext.addNewDataContainer(client);
+  }
   // Controla a classe do elemento baseado no estado "open"
   useEffect(() => {
     console.log('teste');
@@ -53,7 +60,7 @@ export default function ClientsSection () {
       {open && <InputSearch onKeyUp={onKeyUp} />}
       {open && clients.map((client, index) => {
         if (client.length > 0 && client.toUpperCase().includes(value.toUpperCase())) {
-          return <button className="clientsButton" key={index}>{client}</button>;
+          return <button className="clientsButton" onClick={() =>{handleSearch(client)}}  key={index}>{client}</button>;
         }
         return null;
       })}

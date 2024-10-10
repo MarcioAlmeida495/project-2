@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
 import { LoadingIcon } from '../Loading/LoadingIcon';
@@ -7,6 +7,7 @@ import InputSearch from '../Inputs/InputSearch';
 import TextDivider from '../TextDivider/TextDivider';
 import { calcularTotal, formatData, init, dateNow } from './functions';
 import { handleKeyUp } from './handles';
+import { GlobalContext } from '../../App';
 
 const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
 const URL = 'http://localhost:80/fetch';
@@ -26,9 +27,10 @@ const URLbuy = 'http://localhost:80/API/compra';
 
 
 
-function DataContainer({newSearch = dateNow()}) {
+function DataContainer({newSearch = dateNow(), key = 0}) {
   //console.log('dataContainer renderizou');
-
+  const theContext = useContext(GlobalContext);
+  console.log('KEYYYYYYYYYY', key);
   // Estado para controlar o texto e o carregamento
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
@@ -76,8 +78,9 @@ function DataContainer({newSearch = dateNow()}) {
   return (
     <div className="card">
       <div style={{float: 'right'}}>
+        {closeble && <button onClick={() => {}} style={{float: 'right'}} ></button>}
         <input ref={refInput} onChange={() => {setCloseble(!closeble)}} type="checkbox" style={{float: 'right'}} />
-        {closeble && <InputSearch onKeyUp={handleKeyUp}/>}
+        {closeble && <><InputSearch onKeyUp={handleKeyUp}/></>}
       </div>
       <h4 className="card-header">{search}</h4>
       {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
@@ -92,4 +95,5 @@ export default DataContainer;
 
 DataContainer.propTypes = {
   newSearch: PropTypes.string,
+  key: PropTypes.number,
 };

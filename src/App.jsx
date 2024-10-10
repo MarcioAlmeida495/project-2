@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
 import './App.css';
-import { LoadingIcon } from './Components/Loading/LoadingIcon';
 import p from 'prop-types'
 import DataContainer from './Components/DataContainer/DataContainer';
-import InputSearch from './Components/Inputs/InputSearch';
 import ButtonAddDataContainer from './Components/ButtonAddDataContainer/ButtonAddDataContainer';
 import ClientsSection from './Components/ClientsSection/ClientsSection';
-import { ButtonMenu } from './Components/Button/ButtonMenu';
 
 var counter = 0;
 
@@ -16,40 +13,36 @@ const globalState = {
   counter: 0,
   value:'',
 }
-const GlobalContext = React.createContext();
 
-const dataModel = {
-  dataComponent: <DataContainer/>,
-  id: 0,
-}
+
+export const GlobalContext = React.createContext();
 
 function App () {
-  const [contextState, setContextState] = useState(globalState);
   const [datasContainer, setDatasContainer] = useState([]);
-  const [editableContainer, setEditableContainer] = useState([{}]);
-  var refs = [];
-  const addNewDataContainer = () => {
-    setDatasContainer([...datasContainer, <DataContainer key={counter}/>]);
+
+  const removeDataContainer = (index) => {
+    setDatasContainer(datasContainer.map(e => e.key!=index));
+  }
+  const addNewDataContainer = (newSearch = '') => {
     counter++;
+    setDatasContainer([...datasContainer, {card: <DataContainer newSearch={newSearch} key={counter}/>, key: counter}]);
     console.log(datasContainer);
     console.log('teste');
   }
-
   const teste = () => {
     console.log('teste')
   }
 
   useEffect(()=>{
-    setDatasContainer([...datasContainer, <DataContainer  key={counter}/>]);
+    setDatasContainer([...datasContainer, {card: <DataContainer key={counter}/>, key: counter}]);
   },[])
 
   return (
-    <GlobalContext.Provider value={{contextState, setContextState}}>
-
+    <GlobalContext.Provider value={{addNewDataContainer, counter, removeDataContainer}}>
       <div className='pageBody'>
         <ClientsSection />
         <div className='content'>
-          {datasContainer.map((data) => data)}
+          {datasContainer.map((data) => data.card)}
           <ButtonAddDataContainer AddDataContainer={addNewDataContainer}/>
         </div>
       </div>
