@@ -1,0 +1,8 @@
+.bclose{
+  background-color: rgb(119, 11, 11);
+  width: 15px;
+  height: 12px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 10px;
+}

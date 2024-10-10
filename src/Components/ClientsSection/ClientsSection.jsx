@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import './styles.css';
 import { ButtonMenu } from "../Buttons/ButtonMenu"; // Assumindo que o ButtonMenu seja simples
 import { GlobalContext } from "../../App";
-import InputSearch from "../Inputs/InputSearch";
+import InputSearch from "../Inputs/InputSearch/InputSearch";
 
 function ordenarSemMaiusculas(array) {
   return array.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));

@@ -3,14 +3,17 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import './styles.css';
 import PropTypes from 'prop-types';
 import { LoadingIcon } from '../Loading/LoadingIcon';
-import InputSearch from '../Inputs/InputSearch';
+import InputSearch from '../Inputs/InputSearch/InputSearch';
 import TextDivider from '../TextDivider/TextDivider';
 import { calcularTotal, formatData, init, dateNow } from './functions';
 import { handleKeyUp } from './handles';
 import { GlobalContext } from '../../App';
+import { BClose } from '../Buttons/BClose/BClose';
+import { SimpleInput } from '../Inputs/SimpleImput/SimpleInput';
 
 const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
 const URL = 'http://localhost:80/fetch';
+const URLBuy = 'http://localhost:80/fetchCompra'
 const URLedit = 'http://localhost:80/API/edicoes';
 const URLbuy = 'http://localhost:80/API/compra';
 
@@ -27,10 +30,10 @@ const URLbuy = 'http://localhost:80/API/compra';
 
 
 
-function DataContainer({newSearch = dateNow(), key = 0}) {
+
+function DataContainer({newSearch = dateNow(), index}) {
   //console.log('dataContainer renderizou');
   const theContext = useContext(GlobalContext);
-  console.log('KEYYYYYYYYYY', key);
   // Estado para controlar o texto e o carregamento
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
@@ -38,25 +41,32 @@ function DataContainer({newSearch = dateNow(), key = 0}) {
   const [total, setTotal] = useState(0.00);
   const [closeble, setCloseble] = useState(true);
   const loading = LoadingIcon();
-  const refContext = useRef(null);
   const refInput = useRef(null);
-
+  const refBuyInput = useRef(null);
   init.body = JSON.stringify({ name: search });
+  const handleKeyUp = (e, value) => {
+    if(e.key === 'Enter') {
+      setSearch(value);
+    }
 
-  const fetchEdicoes = (body) => {
-    fetch(URLedit, formatData(body))
-    .then((r) => r.json())
-    .then((r) => {
-
-      // console.log('Dados recebidos:', r);
-      setText(r.id); // Define os dados recebidos como texto
-      setIsLoading(false); // Termina o carregamento
-    })
+  };
+  const getInit = (data) => {
+    return JSON.stringify({ nome: newSearch, compra: data});
+  }
+  const handleSendData = () => {
+    console.log(refBuyInput.current);
+    // fetch(URLbuy, getInit(refBuyInput.current.value)
+    //   .then(r=> r.json())
+    //   .then(r=>{console.log(r)}))
+  }
+  const handleRemoveCard = () => {
+    theContext.removeDataContainer(index);
   }
 
   useEffect(() => {
     // console.log('AQUI??!?!?!');
     setIsLoading(true); // Inicia o carregamento
+
 
     fetch(URL, init)
       .then((r) => r.json())
@@ -78,7 +88,7 @@ function DataContainer({newSearch = dateNow(), key = 0}) {
   return (
     <div className="card">
       <div style={{float: 'right'}}>
-        {closeble && <button onClick={() => {}} style={{float: 'right'}} ></button>}
+        {closeble && <BClose onClick={handleRemoveCard} />}
         <input ref={refInput} onChange={() => {setCloseble(!closeble)}} type="checkbox" style={{float: 'right'}} />
         {closeble && <><InputSearch onKeyUp={handleKeyUp}/></>}
       </div>
@@ -86,7 +96,8 @@ function DataContainer({newSearch = dateNow(), key = 0}) {
       {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
       <div className="card-context">{isLoading ? loading : <TextDivider text={text}/>}</div>
       <div className='showTotal'>{`Valor Total: ${total.toFixed(2)}`}</div>
-      <button onClick={() => {fetchEdicoes({name:'Marcio', id:'001'})}}>edicoes</button>
+      <SimpleInput  placeholder={'Uma Nova Compra'}/>
+
     </div>
   );
 }
@@ -95,5 +106,5 @@ export default DataContainer;
 
 DataContainer.propTypes = {
   newSearch: PropTypes.string,
-  key: PropTypes.number,
+  index: PropTypes.number,
 };

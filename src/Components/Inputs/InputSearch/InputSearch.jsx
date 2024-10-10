@@ -12,7 +12,7 @@ function InputSearch({onKeyUp}) {
 
   return <input
   placeholder="Type your Search"
-  className={ focused ? "searchInput" : "searchInput blinking"}
+  className="searchInput"
   onKeyUp={(e)=>{onKeyUp(e, e.target.value)}}
   type="search"
   onFocus={handleFocused}
@@ -22,6 +22,7 @@ function InputSearch({onKeyUp}) {
 
 InputSearch.propTypes = {
   onKeyUp: PropTypes.func,
+  blinking: PropTypes.bool,
 }
 
 export default InputSearch;

@@ -1,0 +1,12 @@
+.simpleinput{
+  width: 100%;
+  padding: 8px;
+  font-size: 17px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.simpleinput:focus{
+  border: 2px solid white;
+  border-radius: 2px;
+}

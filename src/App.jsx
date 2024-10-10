@@ -21,16 +21,17 @@ function App () {
   const [datasContainer, setDatasContainer] = useState([]);
 
   const removeDataContainer = (index) => {
-    setDatasContainer(datasContainer.map(e => e.key!=index));
+    console.log(datasContainer.map(e => e.key!=index));
+    setDatasContainer(datasContainer.map(e => e.key!=index && e));
   }
   const addNewDataContainer = (newSearch = '') => {
     counter++;
-    setDatasContainer([...datasContainer, {card: <DataContainer newSearch={newSearch} key={counter}/>, key: counter}]);
+    setDatasContainer([...datasContainer, {card: <DataContainer newSearch={newSearch} key={counter} index={counter}/>, key: counter}]);
     console.log(datasContainer);
-    console.log('teste');
+    //console.log('teste');
   }
   const teste = () => {
-    console.log('teste')
+    //console.log('teste')
   }
 
   useEffect(()=>{
@@ -42,6 +43,7 @@ function App () {
       <div className='pageBody'>
         <ClientsSection />
         <div className='content'>
+
           {datasContainer.map((data) => data.card)}
           <ButtonAddDataContainer AddDataContainer={addNewDataContainer}/>
         </div>
