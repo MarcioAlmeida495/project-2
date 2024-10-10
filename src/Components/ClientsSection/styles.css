@@ -40,5 +40,7 @@
   }
   100%{
     width: 25px;
+    border: none;
+    box-shadow: none;
   }
 }

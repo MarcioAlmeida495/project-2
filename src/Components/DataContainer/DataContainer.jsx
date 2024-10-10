@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import { LoadingIcon } from '../Loading/LoadingIcon';
 import InputSearch from '../Inputs/InputSearch';
 import TextDivider from '../TextDivider/TextDivider';
-import { calcularTotal, formatData, init } from './functions';
-
+import { calcularTotal, formatData, init, dateNow } from './functions';
+import { handleKeyUp } from './handles';
 
 const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
 const URL = 'http://localhost:80/fetch';
@@ -25,13 +25,14 @@ const URLbuy = 'http://localhost:80/API/compra';
 // }
 
 
-function DataContainer() {
-  console.log('dataContainer renderizou');
+
+function DataContainer({newSearch = dateNow()}) {
+  //console.log('dataContainer renderizou');
 
   // Estado para controlar o texto e o carregamento
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
-  const [search, setSearch] = useState(new Date().toLocaleDateString('pt-BR'));
+  const [search, setSearch] = useState(newSearch);
   const [total, setTotal] = useState(0.00);
   const [closeble, setCloseble] = useState(true);
   const loading = LoadingIcon();
@@ -45,14 +46,14 @@ function DataContainer() {
     .then((r) => r.json())
     .then((r) => {
 
-      console.log('Dados recebidos:', r);
+      // console.log('Dados recebidos:', r);
       setText(r.id); // Define os dados recebidos como texto
       setIsLoading(false); // Termina o carregamento
     })
   }
 
   useEffect(() => {
-    console.log('AQUI??!?!?!');
+    // console.log('AQUI??!?!?!');
     setIsLoading(true); // Inicia o carregamento
 
     fetch(URL, init)
@@ -61,7 +62,7 @@ function DataContainer() {
         const data = Object.values(r);
         const arr = data[0].split(/\r?\n/);
 
-        console.log('Dados recebidos:', data);
+        // console.log('Dados recebidos:', data);
         setText(data[0]); // Define os dados recebidos como texto
         setTotal(calcularTotal(data[0]));
         setIsLoading(false); // Termina o carregamento
@@ -72,18 +73,6 @@ function DataContainer() {
     //console.log('Texto alterado:', text);
   }, [text]);
 
-  const handleKeyUp = (e, value) => {
-    if(e.key === 'Enter') {
-      setSearch(value);
-    }
-
-  };
-  const handleKeyUpBuy = (e, value) => {
-    if(e.key === 'Enter') {
-      setSearch(value);
-    }
-
-  };
   return (
     <div className="card">
       <div style={{float: 'right'}}>
@@ -102,5 +91,5 @@ function DataContainer() {
 export default DataContainer;
 
 DataContainer.propTypes = {
-  search: PropTypes.string,
+  newSearch: PropTypes.string,
 };

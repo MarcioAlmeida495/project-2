@@ -8,6 +8,8 @@ import ButtonAddDataContainer from './Components/ButtonAddDataContainer/ButtonAd
 import ClientsSection from './Components/ClientsSection/ClientsSection';
 import { ButtonMenu } from './Components/Button/ButtonMenu';
 
+var counter = 0;
+
 const globalState = {
   title: 'Título do Contexto',
   body: 'o Body do Contexto',
@@ -24,10 +26,11 @@ const dataModel = {
 function App () {
   const [contextState, setContextState] = useState(globalState);
   const [datasContainer, setDatasContainer] = useState([]);
+  const [editableContainer, setEditableContainer] = useState([{}]);
   var refs = [];
-
   const addNewDataContainer = () => {
-    setDatasContainer([...datasContainer, <DataContainer refs={refs} key={datasContainer.length}/>]);
+    setDatasContainer([...datasContainer, <DataContainer key={counter}/>]);
+    counter++;
     console.log(datasContainer);
     console.log('teste');
   }
@@ -37,7 +40,7 @@ function App () {
   }
 
   useEffect(()=>{
-    setDatasContainer([...datasContainer, <DataContainer refs={refs} key={datasContainer.length}/>]);
+    setDatasContainer([...datasContainer, <DataContainer  key={counter}/>]);
   },[])
 
   return (

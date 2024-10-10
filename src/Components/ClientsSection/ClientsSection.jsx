@@ -35,7 +35,7 @@ export default function ClientsSection () {
   }, []);
 
   // Função para alternar o estado "open"
-  const Open = useCallback(() => {
+  const Open = useCallback((e) => {
     setOpen((prev) => {
       console.log('BOOL', prev);
       return !prev;
@@ -48,8 +48,8 @@ export default function ClientsSection () {
 
   return (
     <section ref={sectionRef} className={'ClientsSection'}>
-      {/*<ButtonMenu onClick={Open} />*/}
-      <button style={{float: 'right'}} onClick={Open}>x</button>
+      <ButtonMenu onClick={Open} />
+
       {open && <InputSearch onKeyUp={onKeyUp} />}
       {open && clients.map((client, index) => {
         if (client.length > 0 && client.toUpperCase().includes(value.toUpperCase())) {
