@@ -9,8 +9,8 @@ export function SimpleInput ({forceValue, placeholder, onChange, onKeyUp}) {
 
   const myfunc = (event) => {
     if(event.key === 'Enter'){
-      setValue('');
       onKeyUp(event);
+      setValue('');
     }
   }
 
