@@ -31,7 +31,7 @@ const URLBuy = 'http://localhost:80/API/compra';
 
 
 
-function DataContainer({newSearch = dateNow(), index}) {
+function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
   //console.log('dataContainer renderizou');
   const theContext = useContext(GlobalContext);
   // Estado para controlar o texto e o carregamento
@@ -41,11 +41,37 @@ function DataContainer({newSearch = dateNow(), index}) {
   const [total, setTotal] = useState(0.00);
   const [closeble, setCloseble] = useState(true);
   const [newBuy, setNewBuy] = useState('');
+  const [updateCounter, setUpdateCounter] = useState(0);
   const loading = LoadingIcon();
   const refInput = useRef(null);
   const refButton = useRef(null);
-
+  console.log(upAtributes);
   init.body = JSON.stringify({ name: search });
+  function fupdate (value) {
+    setUpdateCounter(value);
+  }
+  useEffect(()=>{
+    upAtributes.push({index: index, updateCounter: updateCounter, setUpdateCounter: fupdate});
+  },[]);
+
+  useEffect(()=>{
+    setIsLoading(true); // Inicia o carregamento
+    init.body = JSON.stringify({ name: search});
+    console.log(init)
+    fetch(URL, init)
+      .then((r) => r.json())
+      .then((r) => {
+        const data = Object.values(r);
+        const arr = data[0].split(/\r?\n/);
+
+        // console.log('Dados recebidos:', data);
+        setText(data[0]); // Define os dados recebidos como texto
+        setTotal(calcularTotal(data[0]));
+        setIsLoading(false); // Termina o carregamento
+      });
+  },[updateCounter]);
+
+
   const handleKeyUp = (e, value) => {
     if(e.key === 'Enter') {
       setSearch(value);
@@ -58,7 +84,9 @@ function DataContainer({newSearch = dateNow(), index}) {
   const handleChange = (value) => {
     setNewBuy(value);
   }
+
   const handleSendData = () => {
+
     init.body = JSON.stringify({ name: search, compra: newBuy});
     console.log(init);
     fetch(URLbuy, init)
@@ -66,6 +94,7 @@ function DataContainer({newSearch = dateNow(), index}) {
       .then(r=>{
         setText(r.conteudo);
         setNewBuy('');
+        upAtributes[0].setUpdateCounter(upAtributes[0].updateCounter+1);
       })
   }
   const handleRemoveCard = () => {
@@ -116,4 +145,5 @@ export default DataContainer;
 DataContainer.propTypes = {
   newSearch: PropTypes.string,
   index: PropTypes.number,
+  upAtributes: PropTypes.array,
 };

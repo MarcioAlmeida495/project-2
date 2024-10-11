@@ -14,6 +14,7 @@ const globalState = {
   value:'',
 }
 
+var cardsToUpdate = [];
 
 export const GlobalContext = React.createContext();
 
@@ -26,7 +27,7 @@ function App () {
   }
   const addNewDataContainer = (newSearch = '') => {
     counter++;
-    setDatasContainer([...datasContainer, {card: <DataContainer newSearch={newSearch} key={counter} index={counter}/>, key: counter}]);
+    setDatasContainer([...datasContainer, {card: <DataContainer upAtributes={cardsToUpdate} newSearch={newSearch} key={counter} index={counter}/>, key: counter}]);
     console.log(datasContainer);
     //console.log('teste');
   }
@@ -35,9 +36,9 @@ function App () {
   }
 
   useEffect(()=>{
-    setDatasContainer([...datasContainer, {card: <DataContainer key={counter}/>, key: counter}]);
+    setDatasContainer([...datasContainer, {card: <DataContainer upAtributes={cardsToUpdate} index={counter} key={counter}/>, key: counter}]);
   },[])
-
+  console.log(cardsToUpdate);
   return (
     <GlobalContext.Provider value={{addNewDataContainer, counter, removeDataContainer}}>
       <div className='pageBody'>

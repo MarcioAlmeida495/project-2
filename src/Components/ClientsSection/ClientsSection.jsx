@@ -20,6 +20,7 @@ export default function ClientsSection () {
   const handleSearch = (client) => {
     console.log(theContext, client);
     theContext.counter++;
+    setValue('');
     theContext.addNewDataContainer(client);
   }
   // Controla a classe do elemento baseado no estado "open"
@@ -43,6 +44,7 @@ export default function ClientsSection () {
 
   // Função para alternar o estado "open"
   const Open = useCallback((e) => {
+    setValue('');
     setOpen((prev) => {
       console.log('BOOL', prev);
       return !prev;

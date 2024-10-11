@@ -13,7 +13,7 @@ function InputSearch({onKeyUp}) {
   return <input
   placeholder="Type your Search"
   className="searchInput"
-  onKeyUp={(e)=>{onKeyUp(e, e.target.value)}}
+  onChange={(e)=>{onKeyUp(e, e.target.value)}}
   type="search"
   onFocus={handleFocused}
   ref={thisInput}
