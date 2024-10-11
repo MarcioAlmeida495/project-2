@@ -38,14 +38,17 @@ export var init = {
   })
 };
 
-export function formatData(body){
+export function formatData(nome = '', compra = ''){
   return init = {
     method: 'POST', // Método HTTP (pode ser 'GET', 'POST', 'PUT', 'DELETE', etc.)
     headers: {
       'Content-Type': 'application/json', // Tipo de conteúdo que estamos enviando
       'Authorization': 'Bearer token'     // Exemplo de autenticação
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify({
+      nome: nome,
+      compra: compra,
+    })
   }
 }
 

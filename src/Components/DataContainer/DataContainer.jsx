@@ -13,9 +13,9 @@ import { SimpleInput } from '../Inputs/SimpleImput/SimpleInput';
 
 const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
 const URL = 'http://localhost:80/fetch';
-const URLBuy = 'http://localhost:80/fetchCompra'
+const URLbuy = 'http://localhost:80/fetchCompra'
 const URLedit = 'http://localhost:80/API/edicoes';
-const URLbuy = 'http://localhost:80/API/compra';
+const URLBuy = 'http://localhost:80/API/compra';
 
 // const math = require('mathjs');
 
@@ -40,9 +40,11 @@ function DataContainer({newSearch = dateNow(), index}) {
   const [search, setSearch] = useState(newSearch);
   const [total, setTotal] = useState(0.00);
   const [closeble, setCloseble] = useState(true);
+  const [newBuy, setNewBuy] = useState('');
   const loading = LoadingIcon();
   const refInput = useRef(null);
-  const refBuyInput = useRef(null);
+  const refButton = useRef(null);
+
   init.body = JSON.stringify({ name: search });
   const handleKeyUp = (e, value) => {
     if(e.key === 'Enter') {
@@ -50,14 +52,21 @@ function DataContainer({newSearch = dateNow(), index}) {
     }
 
   };
-  const getInit = (data) => {
-    return JSON.stringify({ nome: newSearch, compra: data});
+  const enterUp = (e) => {
+    e.key ==='Enter' && refButton.current.click();
+  }
+  const handleChange = (value) => {
+    setNewBuy(value);
   }
   const handleSendData = () => {
-    console.log(refBuyInput.current);
-    // fetch(URLbuy, getInit(refBuyInput.current.value)
-    //   .then(r=> r.json())
-    //   .then(r=>{console.log(r)}))
+    init.body = JSON.stringify({ name: search, compra: newBuy});
+    console.log(init);
+    fetch(URLbuy, init)
+      .then(r=> r.json())
+      .then(r=>{
+        setText(r.conteudo);
+        setNewBuy('');
+      })
   }
   const handleRemoveCard = () => {
     theContext.removeDataContainer(index);
@@ -82,8 +91,8 @@ function DataContainer({newSearch = dateNow(), index}) {
   }, [search]);
 
   useEffect(() => {
-    //console.log('Texto alterado:', text);
-  }, [text]);
+    setTotal(calcularTotal(text));
+  }, [text, total]);
 
   return (
     <div className="card">
@@ -96,8 +105,8 @@ function DataContainer({newSearch = dateNow(), index}) {
       {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
       <div className="card-context">{isLoading ? loading : <TextDivider text={text}/>}</div>
       <div className='showTotal'>{`Valor Total: ${total.toFixed(2)}`}</div>
-      <SimpleInput  placeholder={'Uma Nova Compra'}/>
-
+      <SimpleInput forceValue={newBuy} onKeyUp={enterUp} onChange={handleChange} placeholder={'Uma Nova Compra'}/>
+      <button ref={refButton} onClick={handleSendData} >test</button>
     </div>
   );
 }
