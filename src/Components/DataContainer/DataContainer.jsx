@@ -7,7 +7,7 @@ import InputSearch from '../Inputs/InputSearch/InputSearch';
 import TextDivider from '../TextDivider/TextDivider';
 import { calcularTotal, formatData, init, dateNow } from './functions';
 import { handleKeyUp } from './handles';
-import { GlobalContext } from '../../App';
+import { GlobalContext } from '../../Templates/Home/Home';
 import { BClose } from '../Buttons/BClose/BClose';
 import { SimpleInput } from '../Inputs/SimpleImput/SimpleInput';
 

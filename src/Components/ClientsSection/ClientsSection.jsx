@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import './styles.css';
 import { ButtonMenu } from "../Buttons/ButtonMenu"; // Assumindo que o ButtonMenu seja simples
-import { GlobalContext } from "../../App";
+import { GlobalContext } from "../../Templates/Home/Home";
 import InputSearch from "../Inputs/InputSearch/InputSearch";
 
 function ordenarSemMaiusculas(array) {
