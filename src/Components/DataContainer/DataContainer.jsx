@@ -74,6 +74,7 @@ function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
 
   const handleKeyUp = (e, value) => {
     if(e.key === 'Enter') {
+      console.log(value);
       setSearch(value);
     }
 
@@ -134,6 +135,7 @@ function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
       {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
       <div className="card-context">{isLoading ? loading : <TextDivider text={text}/>}</div>
       <div className='showTotal'>{`Valor Total: ${total.toFixed(2)}`}</div>
+      {/* Input abaixo para realizar uma compra */}
       <SimpleInput forceValue={newBuy} onKeyUp={enterUp} onChange={handleChange} placeholder={'Uma Nova Compra'}/>
       <button ref={refButton} onClick={handleSendData} >test</button>
     </div>

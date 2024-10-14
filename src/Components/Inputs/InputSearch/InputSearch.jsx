@@ -3,19 +3,30 @@ import "./styles.css";
 import PropTypes from 'prop-types';
 
 function InputSearch({onKeyUp}) {
-  const [focused, setFocused] = useState(false);
+  const [value, setValue] = useState('');
   console.log('input renderizou');
-  const thisInput = useRef(null)
-  const handleFocused = () => {
-    setFocused(true);
-  }
+  const thisInput = useRef(null);
+
 
   return <input
   placeholder="Type your Search"
   className="searchInput"
-  onChange={(e)=>{onKeyUp(e, e.target.value)}}
+  value={value}
+  onChange={(event)=>{
+    const { value } = event.target;
+    console.log('VALUE',event.target.value);
+    setValue(value);
+    onKeyUp(event, value);
+  }
+  }
+  onKeyUp={(event)=>{
+    console.log(value);
+    console.log(event.target.value);
+    console.log('KEY:', event.key);
+    onKeyUp(event, value);
+    // setValue(event.target.value);
+  }}
   type="search"
-  onFocus={handleFocused}
   ref={thisInput}
   />;
 }
