@@ -1,12 +1,16 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./styles.css";
 import PropTypes from 'prop-types';
 
-function InputSearch({onKeyUp}) {
+function InputSearch({onKeyUp, datasSearch = []}) {
   const [value, setValue] = useState('');
+  console.log(datasSearch)
   console.log('input renderizou');
   const thisInput = useRef(null);
 
+  useEffect(()=>{
+    //thisInput.current.select();
+  });
 
   return <input
   placeholder="Type your Search"
@@ -33,7 +37,7 @@ function InputSearch({onKeyUp}) {
 
 InputSearch.propTypes = {
   onKeyUp: PropTypes.func,
-  blinking: PropTypes.bool,
+  datasSearch: PropTypes.array,
 }
 
 export default InputSearch;

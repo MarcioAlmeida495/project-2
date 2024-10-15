@@ -31,6 +31,7 @@ export default function ClientsSection () {
     }
   }, [open]);
 
+
   // Faz a chamada para buscar os clientes e ordena
   useEffect(() => {
     fetch('http://localhost/fetchControle')
@@ -59,7 +60,7 @@ export default function ClientsSection () {
     <section ref={sectionRef} className={'ClientsSection'}>
       <ButtonMenu onClick={Open} />
 
-      {open && <InputSearch onKeyUp={onKeyUp} />}
+      {open && <InputSearch onKeyUp={onKeyUp} datasSearch={clients}/>}
       {open && clients.map((client, index) => {
         if (client.length > 0 && client.toUpperCase().includes(value.toUpperCase())) {
           return <button className="clientsButton" onClick={() =>{handleSearch(client)}}  key={index}>{client}</button>;

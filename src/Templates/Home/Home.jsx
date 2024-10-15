@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
-// import '../App.css';
+// import '../App.css';;
+import './styles.css';
 import '../../App.css';
 import p from 'prop-types'
 import DataContainer from '../../Components/DataContainer/DataContainer';

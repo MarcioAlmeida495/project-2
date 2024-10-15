@@ -3,7 +3,7 @@ import './styles.css'
 
 import P from 'prop-types';
 
-export function SimpleInput ({forceValue, placeholder, onChange, onKeyUp}) {
+export function SimpleInput ({placeholder, onChange, onKeyUp}) {
   const [value, setValue] = useState('');
   const inputRef = useRef(null);
 

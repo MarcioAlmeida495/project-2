@@ -5,6 +5,10 @@
 .content{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-rows: minmax(700px, auto);
   gap: 30px;
   padding: 20px;
+}
+body{
+  height: 100vh;
 }

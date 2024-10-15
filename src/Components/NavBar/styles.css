@@ -1,0 +1,45 @@
+/* styles.css */
+
+/* Definindo a navbar como fixa no topo da tela */
+.myNavBar {
+  position: fixed;        /* Fixa a navbar no topo */
+  top: 0;                 /* Coloca no topo da página */
+  left: 0;                /* Alinha à esquerda da tela */
+  width: 100%;            /* Ocupa toda a largura da página */
+  height: 60px;           /* Altura da navbar */
+  background-color: #007bff; /* Cor de fundo da navbar: azul principal */
+  color: white;           /* Cor do texto branco para contraste */
+  display: flex;          /* Usa flexbox para centralizar os itens */
+  justify-content: center;/* Centraliza o conteúdo horizontalmente */
+  align-items: center;    /* Centraliza o conteúdo verticalmente */
+  z-index: 1000;          /* Garante que a navbar fique sobre outros elementos */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil abaixo da navbar */
+  transition: background-color 0.3s ease; /* Suaviza a mudança de cor no hover */
+  font-size: 18px;        /* Tamanho do texto na navbar */
+  font-weight: bold;      /* Deixa o texto mais destacado */
+}
+
+/* Efeito de hover na navbar */
+
+
+/* Adiciona espaçamento entre a navbar e o conteúdo da página */
+body {
+  margin: 0;
+  padding-top: 60px; /* Garante que o conteúdo não fique escondido atrás da navbar */
+}
+
+/* Estiliza links na navbar (se houver no futuro) */
+.myNavBar a {
+  cursor: pointer;
+  color: white; /* Links brancos */
+  text-decoration: none; /* Remove sublinhado dos links */
+  padding: 0 15px; /* Espaçamento lateral nos links */
+  transition: all ease-in-out;
+}
+
+
+
+.myNavBar a:hover {
+  color: #8b9cbb; /* Muda a cor do texto para um amarelo claro ao passar o mouse */
+  transform: scale(1.15);
+}
