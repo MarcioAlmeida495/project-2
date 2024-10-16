@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import './styles.css';
 import P from 'prop-types';
-import { URLallitens } from '../../apiURLS';
 import Row from './Rows/Row';
-import TableGPT from './TableGPT';
+import { URLallitens } from '../../../../apiURLS';
 
 const datafetch = new Promise (()=>{
   fetch(URLallitens).then(r=>{
@@ -14,7 +13,7 @@ const datafetch = new Promise (()=>{
 })
 
 
-export default function Table(){
+export default function Table({fieldsNum = 6}){
   const [itens, setItens] = useState([]);
   const [counter, setCounter] = useState(0);
   console.log('TABLERENDERIZOU');
@@ -38,18 +37,25 @@ export default function Table(){
     console.log('COUNTER', counter, 'ITENS', itens);
   }, [itens]);
 
-  if(itens){
+  if(itens.length > 0){
     return (
         <table>
           <thead>
+            <tr>
+              {Object.keys(itens[0]).map((key, index)=>{
+                if(index<fieldsNum) return <th key={`theadtdtr${key}`} >{key}</th>;
+              })}
+            </tr>
           </thead>
-          {/* {itens && itens.map(iten => <h3 key={iten.id} >{iten.id} : {iten.name} : {parseFloat(iten.valorV).toFixed(2)}</h3>)} */}
-          <h1>{counter}</h1>
-          {itens.length > 0 && itens.map((iten, index) => {
-            console.log('iten', iten);
-            return <Row key={index} data={iten} fieldsNum={6}/>
-          })}
-          {/* <TableGPT data={itens}/> */}
+          <tbody>
+            {/* {itens && itens.map(iten => <h3 key={iten.id} >{iten.id} : {iten.name} : {parseFloat(iten.valorV).toFixed(2)}</h3>)} */}
+
+            {itens.length > 0 && itens.map((iten, index) => {
+              console.log('iten', iten);
+              return <Row key={index} data={iten} fieldsNum={fieldsNum}/>
+            })}
+            {/* <TableGPT data={itens}/> */}
+          </tbody>
         </table>
       )
   }else{
@@ -60,4 +66,5 @@ export default function Table(){
 
 Table.propTypes = {
   children: P.node,
+  fieldsNum: P.number,
 }

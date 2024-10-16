@@ -31,6 +31,10 @@ export default function Row({data = {}, fieldsNum = 6, key}){
               {typeof value === 'object' ? JSON.stringify(value) : value}
             </td>
           ))}
+          <td>
+            <button className='checkAction' >Editar</button>
+            <button className='checkAction' >Deletar</button>
+          </td>
         </tr>
   );
 }

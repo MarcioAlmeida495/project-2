@@ -2,8 +2,7 @@
 import { useState } from "react";
 import NavBar from "./Components/NavBar/NavBar";
 import Home from "./Templates/Home/Home";
-import Table from "./Components/Table/Table";
-import ItensTable from "./Templates/ItensTable/ItensTable";
+import ItensManager from "./Templates/ItensTable/ItensManager";
 
 export default function App () {
   const [page, setPage] = useState(0);
@@ -14,7 +13,7 @@ export default function App () {
     <div>
       <NavBar changeTemplate={changeTemplate}/>
       { page==0 && <Home />}
-      { page==1 && <ItensTable />}
+      { page==1 && <ItensManager />}
       { page==2 && <h1>Page3</h1>}
     </div>
   )
