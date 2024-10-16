@@ -1,5 +1,6 @@
-
-
+.checkCloseble{
+  float: right;
+}
 .showTotal{
   width: 100%;
   font-size: 20px;

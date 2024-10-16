@@ -11,11 +11,15 @@ import { GlobalContext } from '../../Templates/Home/Home';
 import { BClose } from '../Buttons/BClose/BClose';
 import { SimpleInput } from '../Inputs/SimpleImput/SimpleInput';
 
-const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
-const URL = 'http://localhost:80/fetch';
-const URLbuy = 'http://localhost:80/fetchCompra'
-const URLedit = 'http://localhost:80/API/edicoes';
-const URLBuy = 'http://localhost:80/API/compra';
+import { URLFetch } from '../../apiURLS';
+import { URLbuy } from '../../apiURLS';
+
+
+// const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
+// const URLFetch = 'http://localhost:80/fetch';
+// const URLbuy = 'http://localhost:80/fetchCompra'
+// const URLedit = 'http://localhost:80/API/edicoes';
+// const URLBuy = 'http://localhost:80/API/compra';
 
 // const math = require('mathjs');
 
@@ -58,7 +62,7 @@ function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
     setIsLoading(true); // Inicia o carregamento
     init.body = JSON.stringify({ name: search});
     console.log(init)
-    fetch(URL, init)
+    fetch(URLFetch, init)
       .then((r) => r.json())
       .then((r) => {
         const data = Object.values(r);
@@ -107,7 +111,7 @@ function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
     setIsLoading(true); // Inicia o carregamento
 
 
-    fetch(URL, init)
+    fetch(URLFetch, init)
       .then((r) => r.json())
       .then((r) => {
         const data = Object.values(r);
@@ -128,7 +132,7 @@ function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
     <div className="card">
       <div style={{float: 'right'}}>
         {closeble && <BClose onClick={handleRemoveCard} />}
-        <input ref={refInput} onChange={() => {setCloseble(!closeble)}} type="checkbox" style={{float: 'right'}} />
+        <input ref={refInput} onChange={() => {setCloseble(!closeble)}} className='checkCloseble' type="checkbox" />
         {closeble && <><InputSearch onKeyUp={handleKeyUp}/></>}
       </div>
       <h4 className="card-header">{search}</h4>

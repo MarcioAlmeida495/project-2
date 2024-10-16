@@ -4,11 +4,15 @@ import P from 'prop-types';
 
 export function ButtonMenu({onClick}) {
   const [vvalue, setVvalue] = useState(0);
+  const [checked, setChecked] = useState(true);
   const handleChange = () => {
     setVvalue((value)=>value+1);
   }
   const refIn = useRef(null);
-
+  const handleClick = () => {
+    setChecked(!checked);
+    onClick();
+  }
   useEffect(()=>{
     console.log('MOUNT ??', refIn.current.value);
   },[vvalue])
@@ -16,7 +20,7 @@ export function ButtonMenu({onClick}) {
   return (
     <div className='marginalizado' >
       <div className="containerButton"  >
-        <input ref={refIn} onChange={handleChange} onClick={onClick} type="checkbox" id="checkbox1" className="checkbox1 visuallyHidden"/>
+        <input ref={refIn} checked={checked} onChange={handleChange} onClick={handleClick} type="checkbox" id="checkbox1" className="checkbox1 visuallyHidden"/>
         <label htmlFor="checkbox1">
             <div className="hamburger hamburger1">
                 <span className="bar bar1"></span>

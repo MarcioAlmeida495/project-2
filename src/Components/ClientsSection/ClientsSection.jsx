@@ -10,7 +10,7 @@ function ordenarSemMaiusculas(array) {
 
 export default function ClientsSection () {
   const theContext = useContext(GlobalContext);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [clients, setClients] = useState([]);
   const [value, setValue] = useState('');
   const sectionRef = useRef(null);
