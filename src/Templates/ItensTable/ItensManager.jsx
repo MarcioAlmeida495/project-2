@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import AddItens from './Components/addItens/AddItens';
+import ButtonAddIten from './Components/addItens/ButtonAddIten';
 import Table from './Components/Table/Table';
-import './styles.css';
+// import './styles.css';
 
 const Div = styled.div`
   width: 100%;
@@ -12,7 +12,7 @@ const Div = styled.div`
 export default function ItensTable(){
   return (
     <Div >
-      <AddItens />
+      <ButtonAddIten />
       <Table />
     </Div>
   )

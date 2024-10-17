@@ -5,12 +5,13 @@
 .content{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  grid-template-rows: minmax(700px, auto);
+  grid-template-rows: minmax(0px, auto);
   gap: 30px;
   padding: 20px;
 }
 body{
-  height: 100vh;
+  height: 100%;
+  overflow: auto;
 }
 .checkAction{
   appearance: none;
@@ -27,3 +28,4 @@ body{
   background-color: rgb(125, 175, 250);
   color: white;
 }
+

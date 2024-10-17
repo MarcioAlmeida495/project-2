@@ -1,7 +1,7 @@
 .ClientsSection{
   float: left;
   width: 250px;
-  height: 100vh;
+  height: 94vh;
   box-shadow: 1px 1px 5px black;
   overflow: auto;
 }

@@ -42,8 +42,8 @@ export default function Table({fieldsNum = 6}){
         <table>
           <thead>
             <tr>
-              {Object.keys(itens[0]).map((key, index)=>{
-                if(index<fieldsNum) return <th key={`theadtdtr${key}`} >{key}</th>;
+              {Object.keys(itens[0]).map((value, index)=>{
+                if(index<fieldsNum) return <th key={`theadtdtr${value}`} >{value}</th>;
               })}
             </tr>
           </thead>
@@ -51,8 +51,8 @@ export default function Table({fieldsNum = 6}){
             {/* {itens && itens.map(iten => <h3 key={iten.id} >{iten.id} : {iten.name} : {parseFloat(iten.valorV).toFixed(2)}</h3>)} */}
 
             {itens.length > 0 && itens.map((iten, index) => {
-              console.log('iten', iten);
-              return <Row key={index} data={iten} fieldsNum={fieldsNum}/>
+              console.log('INDEXTABLE', index);
+              return <Row key={index} keyValue={index} data={iten} fieldsNum={fieldsNum}/>
             })}
             {/* <TableGPT data={itens}/> */}
           </tbody>

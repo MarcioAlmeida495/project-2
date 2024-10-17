@@ -1,13 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import './styles.css';
 import P from 'prop-types';
 
-export default function Row({data = {}, fieldsNum = 6, key}){
+const prefixClass = (key) => `trRow[${key}]`;
+
+
+export default function Row({data = {}, fieldsNum = 6, keyValue = 0}){
   const [dataValue, setDataValue] = useState({});
   const [fields, setFields] = useState([]);
   const [fieldsValues, setFieldsValues] = useState([]);
+  const trRef = useRef(null);
   console.log('RENDERIZOU FILHO');
-  console.log('DATA', data)
+  console.log('DATA', data);
+  console.log('INDEX', keyValue);
+
+  const handleClick = (event) => {
+    console.log(event.target)
+    console.log(trRef);
+    console.log(trRef.current.querySelectorAll('td'));
+    const children = [...trRef.current.children];
+    console.log(children);
+    children.map(child => {
+      if(event.target != child){
+        child.innerHTML = <input type='text' value={child.innerHTML}/>
+      }
+    })
+
+  }
 
   useEffect(() => {
     if (data) {
@@ -24,15 +43,15 @@ export default function Row({data = {}, fieldsNum = 6, key}){
   }
 
   return (
-        <tr>
+        <tr ref={trRef} className={prefixClass(keyValue)} >
           {fieldsValues.map((value, index) => (
             index<fieldsNum &&
-            <td key={index}>
+            <td key={`trtd${keyValue}${index}`}>
               {typeof value === 'object' ? JSON.stringify(value) : value}
             </td>
           ))}
           <td>
-            <button className='checkAction' >Editar</button>
+            <button onClick={handleClick} className='checkAction' >Editar</button>
             <button className='checkAction' >Deletar</button>
           </td>
         </tr>
@@ -42,7 +61,7 @@ export default function Row({data = {}, fieldsNum = 6, key}){
 Row.propTypes = {
   data: P.object,
   fieldsNum: P.number,
-  key: P.number,
+  keyValue: P.number,
 };
 
 
