@@ -10,16 +10,16 @@ export default function Row({data = {}, fieldsNum = 6, keyValue = 0}){
   const [fields, setFields] = useState([]);
   const [fieldsValues, setFieldsValues] = useState([]);
   const trRef = useRef(null);
-  console.log('RENDERIZOU FILHO');
-  console.log('DATA', data);
-  console.log('INDEX', keyValue);
+  // console.log('RENDERIZOU FILHO');
+  // console.log('DATA', data);
+  // console.log('INDEX', keyValue);
 
   const handleClick = (event) => {
-    console.log(event.target)
-    console.log(trRef);
-    console.log(trRef.current.querySelectorAll('td'));
+    // console.log(event.target)
+    // console.log(trRef);
+    // console.log(trRef.current.querySelectorAll('td'));
     const children = [...trRef.current.children];
-    console.log(children);
+    // console.log(children);
     children.map(child => {
       if(event.target != child){
         child.innerHTML = <input type='text' value={child.innerHTML}/>
@@ -30,7 +30,7 @@ export default function Row({data = {}, fieldsNum = 6, keyValue = 0}){
 
   useEffect(() => {
     if (data) {
-      console.log('Data received:', data);
+      // console.log('Data received:', data);
       setDataValue(data);
       setFields(Object.keys(data));
       setFieldsValues(Object.values(data));

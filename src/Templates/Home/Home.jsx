@@ -6,6 +6,7 @@ import p from 'prop-types'
 import DataContainer from '../../Components/DataContainer/DataContainer';
 import ButtonAddDataContainer from '../../Components/ButtonAddDataContainer/ButtonAddDataContainer';
 import ClientsSection from '../../Components/ClientsSection/ClientsSection';
+import { AllMyPageProvider } from '../../Contexts/AllMyPageContext';
 
 var counter = 0;
 
@@ -42,18 +43,18 @@ export default function Home () {
   },[])
   console.log(cardsToUpdate);
   return (
-    <>
-    <GlobalContext.Provider value={{addNewDataContainer, counter, removeDataContainer}}>
-      <div className='pageBody'>
-        <ClientsSection />
-        <div className='content'>
+    <AllMyPageProvider fns={[datasContainer, setDatasContainer]}>
+      <GlobalContext.Provider value={{addNewDataContainer, counter, removeDataContainer}}>
+        <div className='pageBody'>
+          <ClientsSection />
+          <div className='content'>
 
-          {datasContainer.map((data) => data.card)}
-          <ButtonAddDataContainer AddDataContainer={addNewDataContainer}/>
+            {datasContainer.map((data) => data.card)}
+            <ButtonAddDataContainer AddDataContainer={addNewDataContainer}/>
+          </div>
         </div>
-      </div>
-    </GlobalContext.Provider>
-    </>
+      </GlobalContext.Provider>
+    </AllMyPageProvider>
   )
 }
 

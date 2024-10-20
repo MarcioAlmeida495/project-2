@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import ButtonAddIten from './Components/addItens/ButtonAddIten';
 import Table from './Components/Table/Table';
+import { useState } from 'react';
+import { ItensContextProvider } from '../../Contexts/ItensContexts';
 // import './styles.css';
 
 const Div = styled.div`
@@ -10,10 +12,17 @@ const Div = styled.div`
 `
 
 export default function ItensTable(){
+  const [counterReset, setCounterReset] = useState(0);
+  const handleIncrementCounter = () => {
+    console.log('KADEEEE CARALEOOOO',counterReset);
+    setCounterReset(counterReset+1);
+  }
   return (
-    <Div >
-      <ButtonAddIten />
-      <Table />
-    </Div>
+    <ItensContextProvider>
+      <Div >
+        <ButtonAddIten handleIncrementCounter={handleIncrementCounter}/>
+        <Table />
+      </Div>
+    </ItensContextProvider>
   )
 }

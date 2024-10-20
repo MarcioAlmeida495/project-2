@@ -3,21 +3,35 @@ import './styles.css';
 import P from 'prop-types';
 import Row from './Rows/Row';
 import { URLallitens } from '../../../../apiURLS';
+import { useItensContext } from '../../../../Contexts/ItensContexts';
 
 const datafetch = new Promise (()=>{
   fetch(URLallitens).then(r=>{
     r.json()
   }).then(r=>{
-    console.log(r);
+    // console.log(r);
   })
 })
 
 
 export default function Table({fieldsNum = 6}){
+  const ItensContext = useItensContext();
   const [itens, setItens] = useState([]);
   const [counter, setCounter] = useState(0);
-  console.log('TABLERENDERIZOU');
-
+  // console.log('TABLERENDERIZOU');
+  useEffect(()=>{
+    setCounter(counter+1);
+    fetch(URLallitens).then(r=>{
+      r.json().then(r=>{
+        // console.log(r);
+        setItens(r);
+        setCounter(counter+1);
+      })
+    })
+    return () => {
+      // console.log('unMOUNT');
+    }
+  }, [ItensContext.counter]);
   useEffect(()=>{
     fetch(URLallitens).then(r=>{
       r.json().then(r=>{
@@ -27,7 +41,7 @@ export default function Table({fieldsNum = 6}){
       })
     })
     return () => {
-      console.log('unMOUNT');
+      // console.log('unMOUNT');
     }
   },[]);
   itens && console.log('ITENSATT', itens[0]);
@@ -51,7 +65,7 @@ export default function Table({fieldsNum = 6}){
             {/* {itens && itens.map(iten => <h3 key={iten.id} >{iten.id} : {iten.name} : {parseFloat(iten.valorV).toFixed(2)}</h3>)} */}
 
             {itens.length > 0 && itens.map((iten, index) => {
-              console.log('INDEXTABLE', index);
+              // console.log('INDEXTABLE', index);
               return <Row key={index} keyValue={index} data={iten} fieldsNum={fieldsNum}/>
             })}
             {/* <TableGPT data={itens}/> */}

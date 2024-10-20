@@ -13,6 +13,7 @@ import { SimpleInput } from '../Inputs/SimpleImput/SimpleInput';
 
 import { URLFetch } from '../../apiURLS';
 import { URLbuy } from '../../apiURLS';
+import { useAllMyPageContext } from '../../Contexts/AllMyPageContext';
 
 
 // const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
@@ -38,6 +39,7 @@ import { URLbuy } from '../../apiURLS';
 function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
   //console.log('dataContainer renderizou');
   const theContext = useContext(GlobalContext);
+  const context = useAllMyPageContext();
   // Estado para controlar o texto e o carregamento
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
@@ -128,6 +130,10 @@ function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
     setTotal(calcularTotal(text));
   }, [text, total]);
 
+  const  clickhere = (value) => {
+    console.log(value, context);
+    context.fns[2]();
+  }
   return (
     <div className="card">
       <div style={{float: 'right'}}>

@@ -3,6 +3,7 @@ import './styles.css';
 import { ButtonMenu } from "../Buttons/ButtonMenu"; // Assumindo que o ButtonMenu seja simples
 import { GlobalContext } from "../../Templates/Home/Home";
 import InputSearch from "../Inputs/InputSearch/InputSearch";
+import { useAllMyPageContext } from "../../Contexts/AllMyPageContext";
 
 function ordenarSemMaiusculas(array) {
   return array.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
@@ -14,7 +15,8 @@ export default function ClientsSection () {
   const [clients, setClients] = useState([]);
   const [value, setValue] = useState('');
   const sectionRef = useRef(null);
-
+  const context = useAllMyPageContext();
+  console.log(context);
   console.log('RENDERIZOU');
 
   const handleSearch = (client) => {
@@ -29,11 +31,16 @@ export default function ClientsSection () {
     if (sectionRef.current) {
       sectionRef.current.className = open ? 'ClientsSection Open' : 'ClientsSection Close';
     }
+
+    console.log(context);
   }, [open]);
 
 
   // Faz a chamada para buscar os clientes e ordena
   useEffect(() => {
+    function teste (){console.log('tess')}
+    context.setFns([...context.fns, teste]);
+    // context.setFns()=>console.log('OPORRA'));
     fetch('http://localhost/fetchControle')
       .then(r => r.json())
       .then(data => {
