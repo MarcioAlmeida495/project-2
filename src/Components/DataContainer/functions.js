@@ -88,3 +88,17 @@ export async function awaitFetch (URL, init) {
         return data;
       });
 }
+
+export const getDataFetch = (URL, init) => new Promise((resolve, reject) => {
+  fetch(URL, init)
+      .then((r) => r.json())
+      .then((r) => {
+        const data = Object.values(r);
+        const arr = data[0].split(/\r?\n/);
+        resolve(data[0]);
+        // console.log('Dados recebidos:', data);
+        // setText(data[0]); // Define os dados recebidos como texto
+        // setTotal(calcularTotal(data[0]));
+        // setIsLoading(false); // Termina o carregamento
+      });
+})

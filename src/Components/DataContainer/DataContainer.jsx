@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { LoadingIcon } from '../Loading/LoadingIcon';
 import InputSearch from '../Inputs/InputSearch/InputSearch';
 import TextDivider from '../TextDivider/TextDivider';
-import { calcularTotal, formatData, init, dateNow } from './functions';
+import { calcularTotal, formatData, getDataFetch, init, dateNow } from './functions';
 import { handleKeyUp } from './handles';
 import { GlobalContext } from '../../Templates/Home/Home';
 import { BClose } from '../Buttons/BClose/BClose';
@@ -112,18 +112,22 @@ function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
     // console.log('AQUI??!?!?!');
     setIsLoading(true); // Inicia o carregamento
 
+    getDataFetch(URLFetch, init).then(r=>{
+      setText(r); // Define os dados recebidos como texto
+      setTotal(calcularTotal(r));
+      setIsLoading(false); // Termina o carregamento
+    })
+    // fetch(URLFetch, init)
+    //   .then((r) => r.json())
+    //   .then((r) => {
+    //     const data = Object.values(r);
+    //     const arr = data[0].split(/\r?\n/);
 
-    fetch(URLFetch, init)
-      .then((r) => r.json())
-      .then((r) => {
-        const data = Object.values(r);
-        const arr = data[0].split(/\r?\n/);
-
-        // console.log('Dados recebidos:', data);
-        setText(data[0]); // Define os dados recebidos como texto
-        setTotal(calcularTotal(data[0]));
-        setIsLoading(false); // Termina o carregamento
-      });
+    //     // console.log('Dados recebidos:', data);
+    //     setText(data[0]); // Define os dados recebidos como texto
+    //     setTotal(calcularTotal(data[0]));
+    //     setIsLoading(false); // Termina o carregamento
+    //   });
   }, [search]);
 
   useEffect(() => {
