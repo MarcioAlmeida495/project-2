@@ -18,11 +18,17 @@ export const AddNewIten = ({keyValue = 0, handleRemove, handleIncrementCounter})
   const refBuy = useRef(null);
   const refAmt = useRef(null);
 
+  useEffect(()=>{
+
+  });
   console.log('HANDLEREMOVE', typeof handleRemove);
   useEffect(()=>{
     console.log('HANDLEMUDOU', handleRemove);
   }, [handleRemove]);
 
+  const handleCancel = () => {
+
+  }
   const handleClick = async (num) => {
     console.log(num);
     handleRemove(keyValue);
@@ -82,7 +88,7 @@ export const AddNewIten = ({keyValue = 0, handleRemove, handleIncrementCounter})
           </td>
           <td>
             <ButtonConfirm onClick={()=>{handleClick(0)}}>Adicionar</ButtonConfirm>
-            <ButtonConfirm onClick={()=>{incrementCounter()}}>incrementar</ButtonConfirm>
+            <ButtonConfirm onClick={()=>{incrementCounter()}}>Cancelar</ButtonConfirm>
           </td>
         </tr>
       </tbody>

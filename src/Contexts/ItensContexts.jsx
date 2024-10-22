@@ -5,11 +5,17 @@ import { createContext, useContext, useState } from 'react';
 export const Context = createContext();
 
 // Provider do contexto que gerencia o estado `counter`
-export const ItensContextProvider = ({ children }) => {
+export const ItensContextProvider = ({ children, links = [] }) => {
   const [counter, setCounter] = useState(0); // Estado local do provider
-
+  const [components, setComponents] = useState([]);
+  const removeComponent = (component) => {
+    setComponents(components.map(each => each!=component && each));
+  }
+  const addComponent = (component) =>{
+    setComponents([...components, component]);
+  }
   return (
-    <Context.Provider value={{ counter, setCounter }}>
+    <Context.Provider value={{ counter, setCounter, removeComponent, addComponent }}>
       {children} {/* Renderiza os componentes filhos */}
     </Context.Provider>
   );
@@ -18,6 +24,7 @@ export const ItensContextProvider = ({ children }) => {
 // Definindo os PropTypes apenas para `children`, já que `counter` e `setCounter` são internos
 ItensContextProvider.propTypes = {
   children: P.node.isRequired,
+  links: P.array,
 };
 
 // Hook personalizado para acessar o contexto

@@ -6,8 +6,8 @@ export const URLbuy = 'http://localhost:80/fetchCompra';
 export const URLedit = 'http://localhost:80/API/edicoes';
 export const URLBuy = 'http://localhost:80/API/compra';
 export const URLallitens = `${prefixSeccao7}/getallitens`;
-export const URLcadNewIten = `${prefixSeccao7}/cadNewItem`
-
+export const URLcadNewIten = `${prefixSeccao7}/cadNewItem`;
+export const URLSearchIten = `${prefixSeccao7}/searchItens`
 
 export default function allURLs(){
   return [

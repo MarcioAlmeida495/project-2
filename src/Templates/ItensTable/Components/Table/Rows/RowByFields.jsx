@@ -6,14 +6,14 @@ import {SimpleInput} from '../../../../../Components/Inputs/SimpleImput/SimpleIn
 const prefixClass = (key) => `trRow[${key}]`;
 
 
-export default function Row({data = {}, fieldsNum = 6, keyValue = 0}){
+export default function RowByFields({data = {}, fieldNames = ['id', 'name'], keyValue = 0}){
   const [dataValue, setDataValue] = useState({});
   const [fields, setFields] = useState([]);
   const [fieldsValues, setFieldsValues] = useState([]);
   const [editOn, setEditOn] = useState(false);
   const trRef = useRef(null);
   // console.log('RENDERIZOU FILHO');
-  // console.log('DATA', data);
+  console.log('DATA', data);
   // console.log('INDEX', keyValue);
 
   const handleClick = (event) => {
@@ -23,7 +23,7 @@ export default function Row({data = {}, fieldsNum = 6, keyValue = 0}){
 
   useEffect(() => {
     if (data) {
-      // console.log('Data received:', data);
+      console.log('Data received:', data);
       setDataValue(data);
       setFields(Object.keys(data));
       setFieldsValues(Object.values(data));
@@ -37,24 +37,21 @@ export default function Row({data = {}, fieldsNum = 6, keyValue = 0}){
 
   return (
     <tr ref={trRef} className={prefixClass(keyValue)} >
-      {fieldsValues.map((value, index) => (
-        index<fieldsNum &&
-        <td key={`trtd${keyValue}${index}`}>
-          {editOn ? <SimpleInput  type='text' upValue={value} /> : (typeof value === 'object' ? (JSON.stringify(value)) : value)}
-
-        </td>
-      ))}
-      <td>
-        <button onClick={handleClick} className='checkAction' >Editar</button>
-        <button className='checkAction' >Deletar</button>
-      </td>
+      {fieldNames.map((fieldName, index)=>{
+        console.log(data);
+        console.log(fieldName)
+        console.log(data[fieldName]);
+        return <td key={prefixClass(index)} >{data[fieldName]}</td>
+      })}
     </tr>
-  )}
+  )
+}
 
-Row.propTypes = {
+RowByFields.propTypes = {
   data: P.object,
   fieldsNum: P.number,
   keyValue: P.number,
+  fieldNames: P.array,
 };
 
 

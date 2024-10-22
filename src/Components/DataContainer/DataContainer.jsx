@@ -117,17 +117,6 @@ function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
       setTotal(calcularTotal(r));
       setIsLoading(false); // Termina o carregamento
     })
-    // fetch(URLFetch, init)
-    //   .then((r) => r.json())
-    //   .then((r) => {
-    //     const data = Object.values(r);
-    //     const arr = data[0].split(/\r?\n/);
-
-    //     // console.log('Dados recebidos:', data);
-    //     setText(data[0]); // Define os dados recebidos como texto
-    //     setTotal(calcularTotal(data[0]));
-    //     setIsLoading(false); // Termina o carregamento
-    //   });
   }, [search]);
 
   useEffect(() => {

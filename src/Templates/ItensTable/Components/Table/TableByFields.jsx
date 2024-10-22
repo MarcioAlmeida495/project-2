@@ -5,6 +5,7 @@ import Row from './Rows/Row';
 import { URLallitens, URLSearchIten } from '../../../../apiURLS';
 import { useItensContext } from '../../../../Contexts/ItensContexts';
 import { getInit } from '../../usuals';
+import RowByFields from './Rows/RowByFields';
 const datafetch = (URL, init) => new Promise ((resolve, reject)=>{
   fetch(URL, init).then(r=>{
     r.json()
@@ -18,10 +19,12 @@ const datafetch = (URL, init) => new Promise ((resolve, reject)=>{
 //     var page = req.body.page;
 //     var pglimit = req.body.limit;
 
-export default function Table({doFetch = false, fieldsNum = 6, filterValue = '', fieldName = 'name'}){
+export default function TableByFields({doFetch = false, fieldNames = ['id', 'name']}){
   const ItensContext = useItensContext();
   const [itens, setItens] = useState([]);
   const [counter, setCounter] = useState(0);
+  const filterValue = '';
+  console.log('FIELDNAMES', fieldNames);
   // console.log('TABLERENDERIZOU');
   // useEffect(()=>{
   //   console.log('DOFETCH', doFetch);
@@ -83,22 +86,16 @@ export default function Table({doFetch = false, fieldsNum = 6, filterValue = '',
         <table>
           <thead>
             <tr>
-              {Object.keys(itens[0]).map((value, index)=>{
-                if(index<fieldsNum) return <th key={`theadtdtr${value}`} >{value}</th>;
-              })}
+               {fieldNames.map((fieldName, index) => {
+                return <td key={index}>{fieldName}</td>
+               })}
             </tr>
           </thead>
           <tbody>
-            {/* {itens && itens.map(iten => <h3 key={iten.id} >{iten.id} : {iten.name} : {parseFloat(iten.valorV).toFixed(2)}</h3>)} */}
-
-            {itens.length > 0 && itens.map((iten, index) => {
-              // console.log('INDEXTABLE', iten.name);
-              // console.log("INDEXTABLE", iten[fieldName]);
-              if(filterValue === '' || iten[fieldName].toUpperCase().includes(filterValue.toUpperCase())) return <Row key={index} keyValue={index} data={iten} fieldsNum={fieldsNum}/>
-              else return null
-              // return <Row key={index} keyValue={index} data={iten} fieldsNum={fieldsNum}/>
+            {itens.map((value, index)=>{
+              console.log('VALUE DENTRO DO MAP', value);
+              return <RowByFields fieldNames={fieldNames} data={value} key={index} keyValue={index}/>
             })}
-            {/* <TableGPT data={itens}/> */}
           </tbody>
         </table>
       )
@@ -108,10 +105,11 @@ export default function Table({doFetch = false, fieldsNum = 6, filterValue = '',
 
 }
 
-Table.propTypes = {
+TableByFields.propTypes = {
   children: P.node,
   fieldsNum: P.number,
   filterValue: P.string,
   fieldName: P.string,
   doFetch: P.bool,
+  fieldNames: P.array,
 }
