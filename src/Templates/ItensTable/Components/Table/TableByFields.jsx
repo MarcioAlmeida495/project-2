@@ -19,11 +19,11 @@ const datafetch = (URL, init) => new Promise ((resolve, reject)=>{
 //     var page = req.body.page;
 //     var pglimit = req.body.limit;
 
-export default function TableByFields({doFetch = false, fieldNames = ['id', 'name']}){
+export default function TableByFields({doFetch = false, filterValue = '', fieldNames = ['id', 'name'], types = ['string', 'string']}){
   const ItensContext = useItensContext();
   const [itens, setItens] = useState([]);
   const [counter, setCounter] = useState(0);
-  const filterValue = '';
+
   console.log('FIELDNAMES', fieldNames);
   // console.log('TABLERENDERIZOU');
   // useEffect(()=>{
@@ -93,8 +93,9 @@ export default function TableByFields({doFetch = false, fieldNames = ['id', 'nam
           </thead>
           <tbody>
             {itens.map((value, index)=>{
-              console.log('VALUE DENTRO DO MAP', value);
-              return <RowByFields fieldNames={fieldNames} data={value} key={index} keyValue={index}/>
+              console.log('VALUE DENTRO DO MAP', value['name']);
+              console.log('FILTER VALUE',filterValue);
+              if(value['name'].toUpperCase().includes(filterValue.toUpperCase()) || filterValue === '') return <RowByFields fieldNames={fieldNames} types={types} data={value} key={index} keyValue={index}/>
             })}
           </tbody>
         </table>
@@ -112,4 +113,5 @@ TableByFields.propTypes = {
   fieldName: P.string,
   doFetch: P.bool,
   fieldNames: P.array,
+  types: P.array,
 }

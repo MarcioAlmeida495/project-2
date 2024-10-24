@@ -3,7 +3,7 @@ import './styles.css'
 
 import P from 'prop-types';
 
-export function SimpleInput ({placeholder, onChange = () => {}, onKeyUp, upValue = ''}) {
+export function SimpleInput ({className = '', placeholder, onChange = () => {}, onKeyUp, upValue = ''}) {
   const [value, setValue] = useState(upValue);
   const inputRef = useRef(null);
 
@@ -23,7 +23,7 @@ export function SimpleInput ({placeholder, onChange = () => {}, onKeyUp, upValue
 
     onChange(inputRef.current.value);
   }
-  return <input onKeyUp={(e) => myfunc(e)} value={value} className='simpleinput' ref={inputRef} onChange={(e) => myOwnonChange(e)} placeholder={placeholder}/>
+  return <input onKeyUp={(e) => myfunc(e)} value={value} className={`simpleinput ${className}`} ref={inputRef} onChange={(e) => myOwnonChange(e)} placeholder={placeholder}/>
 
 }
 
@@ -33,4 +33,5 @@ SimpleInput.propTypes = {
   onKeyUp: P.func,
   forceValue: P.string,
   upValue: P.string,
+  className: P.string,
 }

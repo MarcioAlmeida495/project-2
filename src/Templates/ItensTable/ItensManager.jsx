@@ -38,7 +38,7 @@ export default function ItensTable(){
       <Div >
         <ButtonAddIten handleIncrementCounter={handleIncrementCounter}/>
         <InputSearch onKeyUp={handleKeyUp} />
-        <TableByFields fieldNames={['id', 'name', 'valorV', 'valorC']} filterValue={valueSearch} doFetch={doFetch} />
+        <TableByFields fieldNames={['id', 'name', 'valorV', 'valorC', 'quantidade']} types={['', '', 'number', 'number', '']} filterValue={valueSearch} doFetch={doFetch} />
       </Div>
     </ItensContextProvider>
   )
