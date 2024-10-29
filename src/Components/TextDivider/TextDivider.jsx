@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './styles.css'; // Importa o arquivo CSS
+import { MyP } from '../TextContent/TextContent';
 
 
-
-const TextDivider = ({ text }) => {
+const TextDivider = ({ text, updateComponent = ()=>{} }) => {
   const containerRef = useRef(null); // Cria a referência do container
   var total = 0.00;
   // Função para rolar com animação
@@ -39,9 +39,10 @@ const TextDivider = ({ text }) => {
   return (
     <div className="text-container" ref={containerRef}>
       {text.split('\n').map((line, index) => (
-        <p key={index} className="line">
+
+        <MyP updateComponent={updateComponent} indexKey={index} key={index} className="line">
           {line}
-        </p>
+        </MyP>
       ))}
     </div>
   );
@@ -50,6 +51,7 @@ const TextDivider = ({ text }) => {
 // Validação das props
 TextDivider.propTypes = {
   text: PropTypes.string.isRequired,
+  updateComponent: PropTypes.func,
 };
 
 export default TextDivider;

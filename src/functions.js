@@ -9,7 +9,7 @@ export const dataFetch = (url, dataInit) => new Promise((resolve, reject)=>{
 
 
 
-export const formatDataInit = (body) => {
+export const formatDataInit = (body = {}) => {
   return {
     method: 'POST', // Método HTTP (pode ser 'GET', 'POST', 'PUT', 'DELETE', etc.)
     headers: {

@@ -6,6 +6,7 @@ export const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
 export const URLFetch = `${prefixVendaApp}/fetch`;
 // export const URLbuy = 'http://localhost:80/fetchCompra';
 export const URLbuy = `${prefixVendaApp}/fetchCompra`;
+export const URLEditLine = `${prefixVendaApp}/editLine`;
 export const URLUpdateIten = `${prefixSeccao7}/updateIten`;
 // export const URLedit = 'http://localhost:80/API/edicoes';
 // export const URLBuy = 'http://localhost:80/API/compra';

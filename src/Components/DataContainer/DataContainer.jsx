@@ -6,7 +6,6 @@ import { LoadingIcon } from '../Loading/LoadingIcon';
 import InputSearch from '../Inputs/InputSearch/InputSearch';
 import TextDivider from '../TextDivider/TextDivider';
 import { calcularTotal, formatData, getDataFetch, init, dateNow } from './functions';
-import { handleKeyUp } from './handles';
 import { GlobalContext } from '../../Templates/Home/Home';
 import { BClose } from '../Buttons/BClose/BClose';
 import { SimpleInput } from '../Inputs/SimpleImput/SimpleInput';
@@ -14,6 +13,8 @@ import { SimpleInput } from '../Inputs/SimpleImput/SimpleInput';
 import { URLFetch } from '../../apiURLS';
 import { URLbuy } from '../../apiURLS';
 import { useAllMyPageContext } from '../../Contexts/AllMyPageContext';
+import { DataContainerContext } from '../../Contexts/DataContainerContext';
+import { useDataContainerContext } from '../../Contexts/DataContainerContext';
 
 
 // const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
@@ -39,6 +40,7 @@ import { useAllMyPageContext } from '../../Contexts/AllMyPageContext';
 function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
   //console.log('dataContainer renderizou');
   const theContext = useContext(GlobalContext);
+  // const DataContainerContext = useDataContainerContext();
   const context = useAllMyPageContext();
   // Estado para controlar o texto e o carregamento
   const [text, setText] = useState('');
@@ -128,20 +130,22 @@ function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
     context.fns[2]();
   }
   return (
-    <div className="card">
-      <div style={{float: 'right'}}>
-        {closeble && <BClose onClick={handleRemoveCard} />}
-        <input ref={refInput} onChange={() => {setCloseble(!closeble)}} className='checkCloseble' name='toggleCloseble' type="checkbox" />
-        {closeble && <><InputSearch onKeyUp={handleKeyUp}/></>}
+    <DataContainerContext data={{search}}>
+      <div className="card">
+        <div style={{float: 'right'}}>
+          {closeble && <BClose onClick={handleRemoveCard} />}
+          <input ref={refInput} onChange={() => {setCloseble(!closeble)}} className='checkCloseble' name='toggleCloseble' type="checkbox" />
+          {closeble && <><InputSearch onKeyUp={handleKeyUp}/></>}
+        </div>
+        <h4 className="card-header">{search}</h4>
+        {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
+        <div className="card-context">{isLoading ? loading : <TextDivider updateComponent={()=>setUpdateCounter(updateCounter+1)} text={text}/>}</div>
+        <div className='showTotal'>{`Valor Total: ${total.toFixed(2)}`}</div>
+        {/* Input abaixo para realizar uma compra */}
+        <SimpleInput forceValue={newBuy} onKeyUp={enterUp} onChange={handleChange} placeholder={'Uma Nova Compra'}/>
+        <button ref={refButton} onClick={handleSendData} >test</button>
       </div>
-      <h4 className="card-header">{search}</h4>
-      {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
-      <div className="card-context">{isLoading ? loading : <TextDivider text={text}/>}</div>
-      <div className='showTotal'>{`Valor Total: ${total.toFixed(2)}`}</div>
-      {/* Input abaixo para realizar uma compra */}
-      <SimpleInput forceValue={newBuy} onKeyUp={enterUp} onChange={handleChange} placeholder={'Uma Nova Compra'}/>
-      <button ref={refButton} onClick={handleSendData} >test</button>
-    </div>
+    </DataContainerContext>
   );
 }
 
