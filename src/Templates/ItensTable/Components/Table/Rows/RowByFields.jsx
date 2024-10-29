@@ -3,8 +3,11 @@ import './styles.css';
 import P from 'prop-types';
 import {SimpleInput} from '../../../../../Components/Inputs/SimpleImput/SimpleInput';
 import {EditIten} from '../../EditIten/EditIten';
+import { formatDataInit, dataFetch } from '../../../../../functions';
+import { URLUpdateIten } from '../../../../../apiURLS';
 const prefixClass = (key) => `trRow[${key}]`;
 const prefixClassInput = (key) => `data${prefixClass(key)}`;
+
 export default function RowByFields({data = {}, fieldNames = ['id', 'name'], types = ['string', 'string'], keyValue = 0}){
   const [dataValue, setDataValue] = useState({});
   const [fields, setFields] = useState([]);
@@ -13,37 +16,61 @@ export default function RowByFields({data = {}, fieldNames = ['id', 'name'], typ
   const trRef = useRef(null);
   const [editValues, setEditValues] = useState({});
   // console.log('RENDERIZOU FILHO');
-  console.log('DATA', data);
+  // console.log('DATA', dataValue);
   // console.log('INDEX', keyValue);
 
 
-  const getValuesFromRow = (rowNum) => {
-    var rowData = document.getElementsByClassName(prefixClassInput(rowNum));
-    var rowDataArr = [...rowData];
-    var dataObject = {};
-    fieldNames.map((field, index)=>{
-      dataObject[field] = rowDataArr[index].value;
-    })
-    console.log(dataObject);
+  const getValuesFromRowInput = (rowNum) => {
+
+      var rowData = document.getElementsByClassName(prefixClassInput(rowNum));
+      var rowDataArr = [...rowData];
+      var dataObject = {};
+      fieldNames.map((field, index)=>{
+          dataObject[field] = rowDataArr[index].value;
+      })
+      // data = dataObject;
+      console.log(dataObject);
+      return dataObject;
+
     // console.log('ROWDATA!!->',rowData);
     // console.log('ELEMENTO PAI', childrenArr);
   }
 
-  const handleClick = (rowNum) => {
-
+  const getValuesFromRowTd = (rowNum) => {
+    var rowData = document.getElementsByClassName(prefixClass(rowNum));
+    var rowDataArr = [...rowData];
+    var dataObject = {};
+    fieldNames.map((field, index)=>{
+        dataObject[field] = rowDataArr[index].innerHTML;
+    })
+    // data = dataObject;
+    console.log(dataObject);
+    return dataObject;
+  }
+  const handleClickCancel = () => {
+    setIsEditing((isEditing) => {
+    return !isEditing;
+  });
+  }
+  const handleClickEdit = (rowNum) => {
     setIsEditing((isEditing) => {
         if(isEditing) {
           console.log('lala');
-          getValuesFromRow(rowNum);
+          var initBody =  {...getValuesFromRowInput(rowNum), categoria: '1'};
+          // setDataValue({...getValuesFromRowInput(rowNum), categoria: '1'});
+          console.log({...getValuesFromRowInput(rowNum), categoria: '1'});
+          var init = formatDataInit(initBody);
+          dataFetch(URLUpdateIten, init).then(r=> setDataValue(r[0]));
+          // console.log('INIT --> ',formatDataInit(initBody));
+
+          console.log('trocou');
         }
-      return !isEditing
-
+      return !isEditing;
     });
-
-
-
   }
-
+  const handleClickDelete = (rowNum) => {
+    console.log(getValuesFromRowTd(rowNum));
+  }
   const handleChangeEvent = (value) => {
     // setFieldsValues();
     console.log('FIELDVALYESSSS',fieldsValues);
@@ -72,8 +99,8 @@ export default function RowByFields({data = {}, fieldNames = ['id', 'name'], typ
           // isEditing ? <td  key={index}><input type='text' onChange={()=>{}} value={data[fieldName]}/></td> : <td key={index}>{(types[index] === 'number' ? parseFloat(data[fieldName]).toFixed(2) : data[fieldName])}</td>
 
 
-          <td key={prefixClass(index)} >
-            {isEditing ? <SimpleInput className={prefixClassInput(keyValue)} type='text' upValue={data[fieldName].toString()} /> : (types[index] === 'number' ? parseFloat(data[fieldName]).toFixed(2) : data[fieldName]) }
+          <td key={prefixClass(index)} className={prefixClass(keyValue)} >
+            {isEditing ? <SimpleInput className={prefixClassInput(keyValue)} type='text' upValue={dataValue[fieldName].toString()} /> : (types[index] === 'number' ? parseFloat(dataValue[fieldName]).toFixed(2) : dataValue[fieldName]) }
           </td>
         )
       }
@@ -81,13 +108,13 @@ export default function RowByFields({data = {}, fieldNames = ['id', 'name'], typ
       <td>
         { isEditing ?
           <>
-            <button onClick={() => handleClick(keyValue)} className='checkAction' >Salvar</button>
-            <button className='checkAction' >Cancelar</button>
+            <button onClick={() => handleClickEdit(keyValue)} className='checkAction' >Salvar</button>
+            <button onClick={() => handleClickCancel(keyValue)} className='checkAction' >Cancelar</button>
           </>
         :
           <>
-            <button onClick={() => handleClick(keyValue)} className='checkAction' >Editar</button>
-            <button className='checkAction' >Deletar</button>
+            <button onClick={() => handleClickEdit(keyValue)} className='checkAction' >Editar</button>
+            <button onClick={() => handleClickDelete(keyValue)} className='checkAction' >Deletar</button>
           </>
         }
       </td>

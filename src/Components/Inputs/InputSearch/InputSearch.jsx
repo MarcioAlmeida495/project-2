@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./styles.css";
 import PropTypes from 'prop-types';
 
-function InputSearch({onKeyUp, datasSearch = []}) {
+function InputSearch({onKeyUp, datasSearch = [], formFieldName = 'searchInput'}) {
   const [value, setValue] = useState('');
   console.log(datasSearch)
   console.log('input renderizou');
@@ -13,6 +13,7 @@ function InputSearch({onKeyUp, datasSearch = []}) {
   });
 
   return <input
+  name={formFieldName}
   placeholder="Type your Search"
   className="searchInput"
   value={value}
@@ -38,6 +39,7 @@ function InputSearch({onKeyUp, datasSearch = []}) {
 InputSearch.propTypes = {
   onKeyUp: PropTypes.func,
   datasSearch: PropTypes.array,
+  formFieldName: PropTypes.string,
 }
 
 export default InputSearch;

@@ -3,7 +3,7 @@ import './styles.css'
 
 import P from 'prop-types';
 
-export function SimpleInput ({className = '', placeholder, onChange = () => {}, onKeyUp, upValue = ''}) {
+export function SimpleInput ({className = '', placeholder, onChange = () => {}, onKeyUp, upValue = '', formFieldName = 'searchInput'}) {
   const [value, setValue] = useState(upValue);
   const inputRef = useRef(null);
 
@@ -23,7 +23,14 @@ export function SimpleInput ({className = '', placeholder, onChange = () => {}, 
 
     onChange(inputRef.current.value);
   }
-  return <input onKeyUp={(e) => myfunc(e)} value={value} className={`simpleinput ${className}`} ref={inputRef} onChange={(e) => myOwnonChange(e)} placeholder={placeholder}/>
+  return <input
+    onKeyUp={(e) => myfunc(e)}
+    value={value}
+    className={`simpleinput ${className}`}
+    ref={inputRef} onChange={(e) => myOwnonChange(e)}
+    placeholder={placeholder}
+    name={formFieldName}
+  />
 
 }
 
@@ -34,4 +41,5 @@ SimpleInput.propTypes = {
   forceValue: P.string,
   upValue: P.string,
   className: P.string,
+  formFieldName: P.string,
 }

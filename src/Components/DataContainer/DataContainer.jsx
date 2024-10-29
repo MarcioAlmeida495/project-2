@@ -131,7 +131,7 @@ function DataContainer({newSearch = dateNow(), index, upAtributes = []}) {
     <div className="card">
       <div style={{float: 'right'}}>
         {closeble && <BClose onClick={handleRemoveCard} />}
-        <input ref={refInput} onChange={() => {setCloseble(!closeble)}} className='checkCloseble' type="checkbox" />
+        <input ref={refInput} onChange={() => {setCloseble(!closeble)}} className='checkCloseble' name='toggleCloseble' type="checkbox" />
         {closeble && <><InputSearch onKeyUp={handleKeyUp}/></>}
       </div>
       <h4 className="card-header">{search}</h4>
