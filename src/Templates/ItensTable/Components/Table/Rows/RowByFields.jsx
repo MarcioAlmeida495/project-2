@@ -4,11 +4,13 @@ import P from 'prop-types';
 import {SimpleInput} from '../../../../../Components/Inputs/SimpleImput/SimpleInput';
 import {EditIten} from '../../EditIten/EditIten';
 import { formatDataInit, dataFetch } from '../../../../../functions';
+import { useItensContext } from '../../../../../Contexts/ItensContexts';
 import { URLUpdateIten } from '../../../../../apiURLS';
 const prefixClass = (key) => `trRow[${key}]`;
 const prefixClassInput = (key) => `data${prefixClass(key)}`;
 
-export default function RowByFields({data = {}, fieldNames = ['id', 'name'], types = ['string', 'string'], keyValue = 0}){
+export default function RowByFields({functions = {},data = {}, fieldNames = ['id', 'name'], types = ['string', 'string'], keyValue = 0}){
+  const ItensContext = useItensContext();
   const [dataValue, setDataValue] = useState({});
   const [fields, setFields] = useState([]);
   const [fieldsValues, setFieldsValues] = useState([]);
@@ -61,6 +63,7 @@ export default function RowByFields({data = {}, fieldNames = ['id', 'name'], typ
           console.log({...getValuesFromRowInput(rowNum), categoria: '1'});
           var init = formatDataInit(initBody);
           dataFetch(URLUpdateIten, init).then(r=> setDataValue(r[0]));
+          ItensContext.setCounter(ItensContext.counter + 1);
           // console.log('INIT --> ',formatDataInit(initBody));
 
           console.log('trocou');
@@ -88,7 +91,7 @@ export default function RowByFields({data = {}, fieldNames = ['id', 'name'], typ
   if(!data || Object.keys(data).length === 0){
     return <h1>Nenhum dado</h1>
   }
-
+  if(data)
   return (
     <tr ref={trRef} id={prefixClass(keyValue)} >
       {fieldNames.map((fieldName, index)=>{
@@ -128,6 +131,7 @@ RowByFields.propTypes = {
   keyValue: P.number,
   fieldNames: P.array,
   types: P.array,
+  functions: P.object,
 };
 
 
