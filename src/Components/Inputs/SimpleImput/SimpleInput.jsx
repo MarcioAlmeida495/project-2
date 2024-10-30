@@ -3,7 +3,7 @@ import './styles.css'
 
 import P from 'prop-types';
 
-export function SimpleInput ({className = '', placeholder, onChange = () => {}, onKeyUp, upValue = '', formFieldName = 'searchInput'}) {
+export function SimpleInput ({enterOn = true, onBlur = () => {}, className = '', placeholder, onChange = () => {}, onKeyUp, upValue = '', formFieldName = 'searchInput'}) {
   const [value, setValue] = useState(upValue);
   const inputRef = useRef(null);
 
@@ -12,6 +12,7 @@ export function SimpleInput ({className = '', placeholder, onChange = () => {}, 
       onKeyUp(event);
       setValue('');
     }
+    if(!enterOn) onKeyUp(event);
   }
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export function SimpleInput ({className = '', placeholder, onChange = () => {}, 
     ref={inputRef} onChange={(e) => myOwnonChange(e)}
     placeholder={placeholder}
     name={formFieldName}
+    onBlur={()=>{onBlur()}}
   />
 
 }
@@ -42,4 +44,6 @@ SimpleInput.propTypes = {
   upValue: P.string,
   className: P.string,
   formFieldName: P.string,
+  onBlur: P.func,
+  enterOn: P.bool,
 }

@@ -4,16 +4,23 @@ import { ButtonMenu } from "../Buttons/ButtonMenu"; // Assumindo que o ButtonMen
 import { GlobalContext } from "../../Templates/Home/Home";
 import InputSearch from "../Inputs/InputSearch/InputSearch";
 import { useAllMyPageContext } from "../../Contexts/AllMyPageContext";
+import { styledButton } from "../../StyledComponents";
+import { SimpleInput } from "../Inputs/SimpleImput/SimpleInput";
+// import { useDataContainerContext } from "../../Contexts/DataContainerContext";
+const Button = styledButton();
 
 function ordenarSemMaiusculas(array) {
   return array.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 }
 
 export default function ClientsSection () {
+  // const containerContext = useDataContainerContext();
   const theContext = useContext(GlobalContext);
   const [open, setOpen] = useState(true);
+  const [isAdding, setIsAdding] = useState(false);
   const [clients, setClients] = useState([]);
   const [value, setValue] = useState('');
+  const [addingName, setAddingName] = useState('');
   const sectionRef = useRef(null);
   const context = useAllMyPageContext();
   console.log(context);
@@ -66,7 +73,26 @@ export default function ClientsSection () {
   return (
     <section ref={sectionRef} className={'ClientsSection'}>
       <ButtonMenu onClick={Open} />
-
+      {
+        open &&
+          isAdding ?
+          <>
+            <SimpleInput
+              enterOn={false}
+              upValue={addingName}
+              onKeyUp={(event)=>{
+                // console.log(containerContext.data);
+                console.log('ADDINGNAME', event.target.value);
+                setAddingName(event.target.value)}
+              }
+              placeholder={'Nome do Cliente'}
+              onBlur={()=>{setIsAdding(!isAdding)}}
+            ></SimpleInput>
+            <Button>Confirmar</Button>
+          </>
+          :
+          <Button onClick={()=>{setIsAdding(!isAdding)}} >Adicionar Cliente</Button>
+      }
       {open && <InputSearch onKeyUp={onKeyUp} datasSearch={clients}/>}
       {open && clients.map((client, index) => {
         if (client.length > 0 && client.toUpperCase().includes(value.toUpperCase())) {

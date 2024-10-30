@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./styles.css";
 import PropTypes from 'prop-types';
 
-function InputSearch({onKeyUp, datasSearch = [], formFieldName = 'searchInput'}) {
+function InputSearch({onKeyUp, onChange = () => {},datasSearch = [], formFieldName = 'searchInput'}) {
   const [value, setValue] = useState('');
   console.log(datasSearch)
   console.log('input renderizou');
@@ -40,6 +40,7 @@ InputSearch.propTypes = {
   onKeyUp: PropTypes.func,
   datasSearch: PropTypes.array,
   formFieldName: PropTypes.string,
+  onChange: PropTypes.func,
 }
 
 export default InputSearch;
