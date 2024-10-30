@@ -4,9 +4,9 @@ import P from 'prop-types';
 export const Context = createContext();
 
 export const AllMyPageProvider = ({ children, fns = [] }) => {
-
+  const [links, setLinks] = useState([]);
   const [myfns, setmyfns] = useState(fns);
-  return <Context.Provider value={{fns: myfns, setFns: setmyfns}}>{ children }</Context.Provider>
+  return <Context.Provider value={{fns: myfns, setFns: setmyfns, links: links, setLinks: setLinks}}>{ children }</Context.Provider>
 }
 
 AllMyPageProvider.propTypes = {

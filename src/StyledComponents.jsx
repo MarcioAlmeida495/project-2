@@ -26,3 +26,25 @@ export const styledButton = (bgcolor = '#1E90FF') => styled.button`
     background-color: #1E70FF;
   }
 `
+
+export const styledInputDate = () => styled.input`
+  width: 100%;
+  padding: 10px 40px;
+  font-size: 16px;
+  text-align: center;
+  color: #333;
+  background-color: #f0f8ff; /* Azul-claro */
+  border: 1px solid #007acc; /* Azul forte */
+  border-radius: 2px;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: #00bfff; /* Turquesa claro */
+    box-shadow: 0 0 5px rgba(0, 191, 255, 0.5); /* Sombra turquesa */
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(47%) sepia(12%) saturate(7468%) hue-rotate(173deg) brightness(91%) contrast(90%);
+  }
+`

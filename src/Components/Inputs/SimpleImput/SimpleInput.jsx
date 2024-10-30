@@ -32,6 +32,7 @@ export function SimpleInput ({enterOn = true, onBlur = () => {}, className = '',
     placeholder={placeholder}
     name={formFieldName}
     onBlur={()=>{onBlur()}}
+    autoComplete='off'
   />
 
 }

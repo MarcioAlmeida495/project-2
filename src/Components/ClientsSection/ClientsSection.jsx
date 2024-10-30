@@ -6,6 +6,9 @@ import InputSearch from "../Inputs/InputSearch/InputSearch";
 import { useAllMyPageContext } from "../../Contexts/AllMyPageContext";
 import { styledButton } from "../../StyledComponents";
 import { SimpleInput } from "../Inputs/SimpleImput/SimpleInput";
+import { InputDate } from "../Inputs/InputDate/InputDate";
+import { dataFetch, formatData, formatDataInit, formatDate } from '../../functions';
+import { URLAddClient } from "../../apiURLS";
 // import { useDataContainerContext } from "../../Contexts/DataContainerContext";
 const Button = styledButton();
 
@@ -21,10 +24,19 @@ export default function ClientsSection () {
   const [clients, setClients] = useState([]);
   const [value, setValue] = useState('');
   const [addingName, setAddingName] = useState('');
+  const [updateCounter, setUpdateCounter] = useState(0);
   const sectionRef = useRef(null);
   const context = useAllMyPageContext();
   console.log(context);
   console.log('RENDERIZOU');
+
+  const attComponent = () => {
+    dataFetch('http://localhost/fetchControle').then(data=>{
+      const arr = data.split(/\n|\r/);
+      const sortArr = ordenarSemMaiusculas(arr);
+      setClients(sortArr);
+    })
+  }
 
   const handleSearch = (client) => {
     console.log(theContext, client);
@@ -48,13 +60,18 @@ export default function ClientsSection () {
     function teste (){console.log('tess')}
     context.setFns([...context.fns, teste]);
     // context.setFns()=>console.log('OPORRA'));
-    fetch('http://localhost/fetchControle')
-      .then(r => r.json())
-      .then(data => {
-        const arr = data.split(/\n|\r/);
-        const sortArr = ordenarSemMaiusculas(arr);
-        setClients(sortArr);
-      });
+    // fetch('http://localhost/fetchControle')
+    //   .then(r => r.json())
+    //   .then(data => {
+    //     const arr = data.split(/\n|\r/);
+    //     const sortArr = ordenarSemMaiusculas(arr);
+    //     setClients(sortArr);
+    //   });
+    dataFetch('http://localhost/fetchControle').then(data=>{
+      const arr = data.split(/\n|\r/);
+      const sortArr = ordenarSemMaiusculas(arr);
+      setClients(sortArr);
+    })
   }, []);
 
   // Função para alternar o estado "open"
@@ -69,7 +86,7 @@ export default function ClientsSection () {
   const onKeyUp = (e) => {
     setValue(e.target.value);
   };
-
+  console.log(context)
   return (
     <section ref={sectionRef} className={'ClientsSection'}>
       <ButtonMenu onClick={Open} />
@@ -78,11 +95,16 @@ export default function ClientsSection () {
           isAdding ?
           <>
             <SimpleInput
-              enterOn={false}
               upValue={addingName}
               onKeyUp={(event)=>{
-                // console.log(containerContext.data);
-                console.log('ADDINGNAME', event.target.value);
+                console.log(event.key);
+                // event.key === 'Enter' && console.log(formatDataInit({nome: event.target.value}))
+                event.key === 'Enter' && dataFetch(URLAddClient, formatDataInit({nome: event.target.value}))
+                  .then(r=> {
+                    handleSearch(r.client);
+                    attComponent();
+                  });
+                // console.log('ADDINGNAME', event.target.value);
                 setAddingName(event.target.value)}
               }
               placeholder={'Nome do Cliente'}
@@ -93,10 +115,14 @@ export default function ClientsSection () {
           :
           <Button onClick={()=>{setIsAdding(!isAdding)}} >Adicionar Cliente</Button>
       }
+      <InputDate onChange={(event)=>{
+        var date = formatDate(event.target.value);
+        handleSearch(date);
+      }} />
       {open && <InputSearch onKeyUp={onKeyUp} datasSearch={clients}/>}
       {open && clients.map((client, index) => {
         if (client.length > 0 && client.toUpperCase().includes(value.toUpperCase())) {
-          return <button className="clientsButton" onClick={() =>{handleSearch(client)}}  key={index}>{client}</button>;
+           return <button className="clientsButton" onClick={() =>{handleSearch(client)}}  key={index}>{client}</button>;
         }
         return null;
       })}
