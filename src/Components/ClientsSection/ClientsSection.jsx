@@ -8,7 +8,7 @@ import { styledButton } from "../../StyledComponents";
 import { SimpleInput } from "../Inputs/SimpleImput/SimpleInput";
 import { InputDate } from "../Inputs/InputDate/InputDate";
 import { dataFetch, formatData, formatDataInit, formatDate } from '../../functions';
-import { URLAddClient } from "../../apiURLS";
+import { URLAddClient, URLFetchControle } from "../../apiURLS";
 // import { useDataContainerContext } from "../../Contexts/DataContainerContext";
 const Button = styledButton();
 
@@ -31,18 +31,18 @@ export default function ClientsSection () {
   console.log('RENDERIZOU');
 
   const attComponent = () => {
-    dataFetch('http://localhost/fetchControle').then(data=>{
+    dataFetch(URLFetchControle).then(data=>{
       const arr = data.split(/\n|\r/);
       const sortArr = ordenarSemMaiusculas(arr);
       setClients(sortArr);
     })
   }
 
-  const handleSearch = (client) => {
+  const handleSearch = (client, type = false) => {
     console.log(theContext, client);
     theContext.counter++;
     setValue('');
-    theContext.addNewDataContainer(client);
+    theContext.addNewDataContainer(client, type);
   }
   // Controla a classe do elemento baseado no estado "open"
   useEffect(() => {
@@ -90,42 +90,51 @@ export default function ClientsSection () {
   return (
     <section ref={sectionRef} className={'ClientsSection'}>
       <ButtonMenu onClick={Open} />
-      {
-        open &&
-          isAdding ?
-          <>
-            <SimpleInput
-              upValue={addingName}
-              onKeyUp={(event)=>{
-                console.log(event.key);
-                // event.key === 'Enter' && console.log(formatDataInit({nome: event.target.value}))
-                event.key === 'Enter' && dataFetch(URLAddClient, formatDataInit({nome: event.target.value}))
-                  .then(r=> {
-                    handleSearch(r.client);
-                    attComponent();
-                  });
-                // console.log('ADDINGNAME', event.target.value);
-                setAddingName(event.target.value)}
-              }
-              placeholder={'Nome do Cliente'}
-              onBlur={()=>{setIsAdding(!isAdding)}}
-            ></SimpleInput>
-            <Button>Confirmar</Button>
-          </>
-          :
-          <Button onClick={()=>{setIsAdding(!isAdding)}} >Adicionar Cliente</Button>
-      }
-      <InputDate onChange={(event)=>{
+
+        {
+          open && (
+            isAdding ?
+            <>
+              <SimpleInput
+                upValue={addingName}
+                onKeyUp={(event)=>{
+                  console.log(event.key);
+                  // event.key === 'Enter' && console.log(formatDataInit({nome: event.target.value}))
+                  event.key === 'Enter' && dataFetch(URLAddClient, formatDataInit({nome: event.target.value}))
+                    .then(r=> {
+                      handleSearch(r.client);
+                      attComponent();
+                    });
+                  // console.log('ADDINGNAME', event.target.value);
+                  setAddingName(event.target.value)}
+                }
+                placeholder={'Nome do Cliente'}
+                onBlur={()=>{setIsAdding(!isAdding)}}
+              ></SimpleInput>
+              <Button>Confirmar</Button>
+            </>
+            :
+            <Button onClick={()=>{setIsAdding(!isAdding)}} >Adicionar Cliente</Button>
+          )
+        }
+      {open &&  <InputDate onChange={(event)=>{
         var date = formatDate(event.target.value);
         handleSearch(date);
-      }} />
+      }} />}
       {open && <InputSearch onKeyUp={onKeyUp} datasSearch={clients}/>}
       {open && clients.map((client, index) => {
         if (client.length > 0 && client.toUpperCase().includes(value.toUpperCase())) {
-           return <button className="clientsButton" onClick={() =>{handleSearch(client)}}  key={index}>{client}</button>;
+           return (
+              <div key={index}>
+                <button className="clientsButton" onClick={() =>{handleSearch(client, true)}}>{client}</button>;
+                <button>Delete</button>
+              </div>
+           )
+
         }
         return null;
       })}
+
     </section>
   );
 }

@@ -28,9 +28,9 @@ export default function Home () {
     console.log(datasContainer.map(e => e.key!=index));
     setDatasContainer(datasContainer.map(e => e.key!=index && e));
   }
-  const addNewDataContainer = (newSearch = '') => {
+  const addNewDataContainer = (newSearch = '', type = false) => {
     counter++;
-    setDatasContainer([...datasContainer, {card: <DataContainer upAtributes={cardsToUpdate} newSearch={newSearch} key={counter} index={counter}/>, key: counter}]);
+    setDatasContainer([...datasContainer, {card: <DataContainer type={type} upAtributes={cardsToUpdate} newSearch={newSearch} key={counter} index={counter}/>, key: counter}]);
     console.log(datasContainer);
     //console.log('teste');
   }

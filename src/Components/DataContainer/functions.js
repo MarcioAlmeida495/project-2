@@ -102,3 +102,12 @@ export const getDataFetch = (URL, init) => new Promise((resolve, reject) => {
         // setIsLoading(false); // Termina o carregamento
       });
 })
+
+export const isDate = (value) => {
+  if(value.includes('-')) return true;
+  else return false;
+}
+
+export const isClient = (value) => {
+  return !isDate(value);
+}
