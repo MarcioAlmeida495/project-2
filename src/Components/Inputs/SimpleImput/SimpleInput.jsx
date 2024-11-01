@@ -8,7 +8,7 @@ export function SimpleInput ({enterOn = true, onBlur = () => {}, className = '',
   const inputRef = useRef(null);
 
   const myfunc = (event) => {
-    if(event.key === 'Enter'){
+    if(event.key === 'Enter' && enterOn){
       onKeyUp(event);
       setValue('');
     }

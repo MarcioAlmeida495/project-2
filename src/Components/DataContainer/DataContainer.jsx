@@ -9,12 +9,14 @@ import { calcularTotal, formatData, getDataFetch, init, dateNow, isClient } from
 import { GlobalContext } from '../../Templates/Home/Home';
 import { BClose } from '../Buttons/BClose/BClose';
 import { SimpleInput } from '../Inputs/SimpleImput/SimpleInput';
-import { URLFetch } from '../../apiURLS';
+import { URLFetch, URLPayment } from '../../apiURLS';
 import { URLbuy } from '../../apiURLS';
 import { useAllMyPageContext } from '../../Contexts/AllMyPageContext';
 import { DataContainerContext } from '../../Contexts/DataContainerContext';
-import { styledScrollBar } from '../../StyledComponents';
+import { styledScrollBar, styledButton } from '../../StyledComponents';
 import { useDataContainerContext } from '../../Contexts/DataContainerContext';
+import { dataFetch, formatDataInit } from '../../functions';
+// import { handleKeyUp } from './handles';
 
 
 // const URL2 = 'https://vendaappxxx-1.onrender.com/fetch';
@@ -36,7 +38,7 @@ import { useDataContainerContext } from '../../Contexts/DataContainerContext';
 
 
 const ScrollBar =  styledScrollBar();
-
+const Button = styledButton('#ccc');
 
 function DataContainer({type = false, newSearch = dateNow(), index, upAtributes = []}) {
   //console.log('dataContainer renderizou');
@@ -52,6 +54,7 @@ function DataContainer({type = false, newSearch = dateNow(), index, upAtributes 
   const [newBuy, setNewBuy] = useState('');
   const [updateCounter, setUpdateCounter] = useState(0);
   const [hasPayment, setHasPayment] = useState(type);
+  const [isPaying, setIsPaying] = useState(false);
   const loading = LoadingIcon();
   const refInput = useRef(null);
   const refButton = useRef(null);
@@ -85,6 +88,31 @@ function DataContainer({type = false, newSearch = dateNow(), index, upAtributes 
       });
   },[updateCounter]);
 
+  useEffect(() => {
+    // console.log('AQUI??!?!?!');
+    setIsLoading(true); // Inicia o carregamento
+
+    getDataFetch(URLFetch, init).then(r=>{
+      setText(r); // Define os dados recebidos como texto
+      setTotal(calcularTotal(r));
+      setIsLoading(false); // Termina o carregamento
+    })
+  }, [search]);
+
+  useEffect(() => {
+    setTotal(calcularTotal(text));
+  }, [text, total]);
+
+  const handlePayment = (e, value) => {
+    if(e.key === 'Enter'){
+      dataFetch(URLPayment, formatDataInit({nome: search, pagamento: e.target.value, typeConnection: 'fetch'}))
+      .then(r=>{
+        setUpdateCounter(updateCounter + 1);
+        setIsPaying(false);
+        console.log(r)
+      })
+    }
+  }
 
   const handleKeyUp = (e, value) => {
     if(e.key === 'Enter') {
@@ -98,7 +126,7 @@ function DataContainer({type = false, newSearch = dateNow(), index, upAtributes 
 
   };
   const enterUp = (e) => {
-    e.key ==='Enter' && refButton.current.click();
+    e.key ==='Enter' && handleSendData();
   }
   const handleChange = (value) => {
     setNewBuy(value);
@@ -120,25 +148,10 @@ function DataContainer({type = false, newSearch = dateNow(), index, upAtributes 
     theContext.removeDataContainer(index);
   }
 
-  useEffect(() => {
-    // console.log('AQUI??!?!?!');
-    setIsLoading(true); // Inicia o carregamento
-
-    getDataFetch(URLFetch, init).then(r=>{
-      setText(r); // Define os dados recebidos como texto
-      setTotal(calcularTotal(r));
-      setIsLoading(false); // Termina o carregamento
-    })
-  }, [search]);
-
-  useEffect(() => {
-    setTotal(calcularTotal(text));
-  }, [text, total]);
-
-  const  clickhere = (value) => {
-    console.log(value, context);
-    context.fns[2]();
-  }
+  // const  clickhere = (value) => {
+  //   console.log(value, context);
+  //   context.fns[2]();
+  // }
   return (
     <ScrollBar>
       <DataContainerContext data={{search}}>
@@ -154,7 +167,7 @@ function DataContainer({type = false, newSearch = dateNow(), index, upAtributes 
           <div className='showTotal'>{`Valor Total: ${total.toFixed(2)}`}</div>
           {/* Input abaixo para realizar uma compra */}
           <SimpleInput forceValue={newBuy} onKeyUp={enterUp} onChange={handleChange} placeholder={'Uma Nova Compra'}/>
-          {hasPayment && <button ref={refButton} onClick={handleSendData} >Pagamento</button>}
+          {hasPayment && ( isPaying ? <SimpleInput onBlur={()=>setIsPaying(false)} placeholder={'Digite o Valor a ser Pago'} onKeyUp={handlePayment} /> : <Button onClick={()=>{setIsPaying(!isPaying)}}>Pagamento</Button>)}
         </div>
       </DataContainerContext>
     </ScrollBar>

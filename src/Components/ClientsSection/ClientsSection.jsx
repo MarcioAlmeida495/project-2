@@ -126,7 +126,7 @@ export default function ClientsSection () {
         if (client.length > 0 && client.toUpperCase().includes(value.toUpperCase())) {
            return (
               <div key={index}>
-                <button className="clientsButton" onClick={() =>{handleSearch(client, true)}}>{client}</button>;
+                <button className="clientsButton" onClick={() =>{handleSearch(client, true)}}>{client}</button>
                 <button>Delete</button>
               </div>
            )

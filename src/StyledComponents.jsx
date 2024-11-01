@@ -55,7 +55,7 @@ export const styledScrollBar = () => styled.div`
 /* Aplica a estilização na barra de rolagem de todos os elementos */
 ::-webkit-scrollbar {
   width: 8px; /* Largura da barra de rolagem vertical */
-  height: 5px; /* Altura da barra de rolagem horizontal */
+  height: 8px; /* Altura da barra de rolagem horizontal */
 }
 
 /* Fundo da área de rolagem */

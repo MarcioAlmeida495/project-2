@@ -6,16 +6,20 @@ import {EditIten} from '../../EditIten/EditIten';
 import { formatDataInit, dataFetch } from '../../../../../functions';
 import { useItensContext } from '../../../../../Contexts/ItensContexts';
 import { URLUpdateIten } from '../../../../../apiURLS';
+import { StyledRow } from './styledRow';
 const prefixClass = (key) => `trRow[${key}]`;
 const prefixClassInput = (key) => `data${prefixClass(key)}`;
+var Tr = StyledRow();
 
 export default function RowByFields({functions = {},data = {}, fieldNames = ['id', 'name'], types = ['string', 'string'], keyValue = 0}){
+  // var Tr[rowNum] = StyledRow();
   const ItensContext = useItensContext();
   const [dataValue, setDataValue] = useState({});
   const [fields, setFields] = useState([]);
   const [fieldsValues, setFieldsValues] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const trRef = useRef(null);
+  const [color, setColor] = useState('555791');
   const [editValues, setEditValues] = useState({});
   // console.log('RENDERIZOU FILHO');
   // console.log('DATA', dataValue);
@@ -87,13 +91,14 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
     }
   }, [data]); // O useEffect agora depende diretamente de "data"
 
-
+  Tr = StyledRow(color)
   if(!data || Object.keys(data).length === 0){
     return <h1>Nenhum dado</h1>
   }
   if(data)
   return (
-    <tr ref={trRef} id={prefixClass(keyValue)} >
+<>
+    <Tr ref={trRef} id={prefixClass(keyValue)} >
       {fieldNames.map((fieldName, index)=>{
         // console.log(data);
         // console.log(fieldName)
@@ -103,7 +108,7 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
 
 
           <td key={prefixClass(index)} className={prefixClass(keyValue)} >
-            {isEditing ? <SimpleInput className={prefixClassInput(keyValue)} type='text' upValue={dataValue[fieldName].toString()} /> : (types[index] === 'number' ? parseFloat(dataValue[fieldName]).toFixed(2) : dataValue[fieldName]) }
+            {isEditing ? <SimpleInput enterOn={false} className={prefixClassInput(keyValue)} onKeyUp={(event) => {if(event.key ==='Enter'){handleClickEdit(keyValue)}}} type='text' upValue={dataValue[fieldName].toString()} /> : (types[index] === 'number' ? parseFloat(dataValue[fieldName]).toFixed(2) : dataValue[fieldName]) }
           </td>
         )
       }
@@ -121,7 +126,8 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
           </>
         }
       </td>
-    </tr>
+    </Tr>
+        {/* <input type="color" id="colorPicker" value={color} onChange={(event)=>{setColor(event.target.value)}}></input>*/}</>
   )
 }
 
