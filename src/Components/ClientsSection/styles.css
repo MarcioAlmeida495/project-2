@@ -4,11 +4,12 @@
   height: 94vh;
   box-shadow: 1px 1px 5px black;
   overflow: auto;
+  box-sizing: border-box;
 }
 .clientsButton{
   background-color: #007bff; /* Cor de fundo do botão */
   margin: 1px;
-  width: 100%;
+  width: 99%;
   color: white;              /* Cor do texto */
   padding: 10px 20px;        /* Espaçamento interno */
   font-size: 15px;           /* Tamanho da fonte */

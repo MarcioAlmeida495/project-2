@@ -39,8 +39,20 @@ import { dataFetch, formatDataInit } from '../../functions';
 
 const ScrollBar =  styledScrollBar();
 const Button = styledButton('#ccc');
-
-function DataContainer({type = false, newSearch = dateNow(), index, upAtributes = []}) {
+const Div = ({changeColor, children}) => {
+  return (
+    (changeColor ?
+      <div className="card bg-color-grey">{children}</div>
+      :
+      <div className="card">{children}</div>
+    )
+  )
+}
+Div.propTypes = {
+  changeColor: PropTypes.bool,
+  children: PropTypes.node,
+}
+function DataContainer({ onChangeName = () => {}, type = false, newSearch = dateNow(), index, upAtributes = []}) {
   //console.log('dataContainer renderizou');
   const theContext = useContext(GlobalContext);
   // const DataContainerContext = useDataContainerContext();
@@ -56,6 +68,7 @@ function DataContainer({type = false, newSearch = dateNow(), index, upAtributes 
   const [hasPayment, setHasPayment] = useState(type);
   const [isPaying, setIsPaying] = useState(false);
   const loading = LoadingIcon();
+  const [isModifier, setIsModifier] = newSearch ? useState(false) : useState(true);
   const refInput = useRef(null);
   const refButton = useRef(null);
   console.log(upAtributes);
@@ -119,8 +132,10 @@ function DataContainer({type = false, newSearch = dateNow(), index, upAtributes 
       // console.log(value);
       // console.log(isClient(value));
       // type = isClient(value);
+      onChangeName(e, index);
       setHasPayment(isClient(value))
       // console.log(type)
+      setIsModifier(false);
       setSearch(value);
     }
 
@@ -155,8 +170,9 @@ function DataContainer({type = false, newSearch = dateNow(), index, upAtributes 
   return (
     <ScrollBar>
       <DataContainerContext data={{search}}>
-        <div className="card">
+        <Div changeColor={isModifier}>
           <div style={{float: 'right'}}>
+            {isModifier && <button >addLink</button>}
             {closeble && <BClose onClick={handleRemoveCard} />}
             <input ref={refInput} onChange={() => {setCloseble(!closeble)}} className='checkCloseble' name='toggleCloseble' type="checkbox" />
             {closeble && <><InputSearch onKeyUp={handleKeyUp}/></>}
@@ -168,7 +184,7 @@ function DataContainer({type = false, newSearch = dateNow(), index, upAtributes 
           {/* Input abaixo para realizar uma compra */}
           <SimpleInput forceValue={newBuy} onKeyUp={enterUp} onChange={handleChange} placeholder={'Uma Nova Compra'}/>
           {hasPayment && ( isPaying ? <SimpleInput onBlur={()=>setIsPaying(false)} placeholder={'Digite o Valor a ser Pago'} onKeyUp={handlePayment} /> : <Button onClick={()=>{setIsPaying(!isPaying)}}>Pagamento</Button>)}
-        </div>
+        </Div>
       </DataContainerContext>
     </ScrollBar>
   );
@@ -181,4 +197,5 @@ DataContainer.propTypes = {
   index: PropTypes.number,
   upAtributes: PropTypes.array,
   type: PropTypes.bool,
+  onChangeName: PropTypes.func,
 };

@@ -1,8 +1,10 @@
 import {styled} from 'styled-components';
 
+const vWidth = '99%';
+
 //USADO EM : textdivider
-export const styledP = (margin = 0) => styled.p`
-  width: 100%;
+export const styledP = (margin = 0, width = vWidth) => styled.p`
+  width: ${width};
   margin: ${margin};
   padding: 5px 0;
   border-bottom: 2px solid #adacac;
@@ -10,9 +12,9 @@ export const styledP = (margin = 0) => styled.p`
 `
 
 
-export const styledButton = (bgcolor = '#1E90FF') => styled.button`
+export const styledButton = (bgcolor = '#1E90FF', width = vWidth) => styled.button`
   margin: 1px;
-  width: 100%;
+  width: ${width};
   box-sizing: border-box;
   border: 2px solid #adacac;
   background-color: ${bgcolor};
@@ -27,8 +29,8 @@ export const styledButton = (bgcolor = '#1E90FF') => styled.button`
   }
 `
 
-export const styledInputDate = () => styled.input`
-  width: 100%;
+export const styledInputDate = (width = vWidth) => styled.input`
+  width: ${width};
   padding: 10px 40px;
   font-size: 16px;
   text-align: center;

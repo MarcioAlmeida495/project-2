@@ -25,17 +25,26 @@ export default function Home () {
   const [datasContainer, setDatasContainer] = useState([]);
 
   const removeDataContainer = (index) => {
-    console.log(datasContainer.map(e => e.key!=index));
-    setDatasContainer(datasContainer.map(e => e.key!=index && e));
+    // console.log(datasContainer.map(e => e.key!=index));
+    setDatasContainer(datasContainer.filter(e => e.key != index));
+    // var arr = datasContainer.splice(index, 1);
+    // console.log('DPS DO REMOVE',  arr )
+    // setDatasContainer(datasContainer.splice(index, 1));
   }
+
+  const changeName = (event, key) => {
+    console.log('CHANGE NAME: ', event.target.value, key);
+
+  }
+
   const addNewDataContainer = (newSearch = '', type = false) => {
     counter++;
-    setDatasContainer([...datasContainer, {card: <DataContainer type={type} upAtributes={cardsToUpdate} newSearch={newSearch} key={counter} index={counter}/>, key: counter}]);
+    setDatasContainer([...datasContainer, {links: [], card: <DataContainer onChangeName={changeName} type={type} upAtributes={cardsToUpdate} newSearch={newSearch} key={counter} index={counter}/>, key: counter, name: newSearch}]);
     console.log(datasContainer);
-    //console.log('teste');
+    // console.log('teste');
   }
   const teste = () => {
-    //console.log('teste')
+    // console.log('teste')
   }
 
   useEffect(()=>{
@@ -45,6 +54,7 @@ export default function Home () {
   return (
     <AllMyPageProvider fns={[datasContainer, setDatasContainer]}>
       <GlobalContext.Provider value={{addNewDataContainer, counter, removeDataContainer}}>
+        <button onClick={()=>console.log(datasContainer)} >CONSOLE</button>
         <div className='pageBody'>
           <ClientsSection />
           <div className='content'>

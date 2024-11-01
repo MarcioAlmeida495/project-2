@@ -7,7 +7,7 @@ export function SimpleInput ({enterOn = true, onBlur = () => {}, className = '',
   const [value, setValue] = useState(upValue);
   const inputRef = useRef(null);
 
-  const myfunc = (event) => {
+  const myKeyUp = (event) => {
     if(event.key === 'Enter' && enterOn){
       onKeyUp(event);
       setValue('');
@@ -25,7 +25,7 @@ export function SimpleInput ({enterOn = true, onBlur = () => {}, className = '',
     onChange(inputRef.current.value);
   }
   return <input
-    onKeyUp={(e) => myfunc(e)}
+    onKeyUp={(e) => myKeyUp(e)}
     value={value}
     className={`simpleinput ${className}`}
     ref={inputRef} onChange={(e) => myOwnonChange(e)}
