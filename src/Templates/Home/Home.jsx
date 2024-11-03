@@ -7,6 +7,8 @@ import DataContainer from '../../Components/DataContainer/DataContainer';
 import ButtonAddDataContainer from '../../Components/ButtonAddDataContainer/ButtonAddDataContainer';
 import ClientsSection from '../../Components/ClientsSection/ClientsSection';
 import { AllMyPageProvider } from '../../Contexts/AllMyPageContext';
+import { dataFetch } from '../../functions';
+import { URLFetchControle } from '../../apiURLS';
 
 var counter = 0;
 
@@ -23,7 +25,7 @@ export const GlobalContext = React.createContext();
 
 export default function Home () {
   const [datasContainer, setDatasContainer] = useState([]);
-
+  const [dataControle, setDataControle] = useState([]);
   const removeDataContainer = (index) => {
     // console.log(datasContainer.map(e => e.key!=index));
     setDatasContainer(datasContainer.filter(e => e.key != index));
@@ -49,11 +51,19 @@ export default function Home () {
 
   useEffect(()=>{
     setDatasContainer([...datasContainer, {card: <DataContainer upAtributes={cardsToUpdate} index={counter} key={counter}/>, key: counter}]);
+    dataFetch(URLFetchControle).then(r => {
+      // console.log(r.split('\n'));
+      const names = r.split(['\n']);
+      const namesFiltered = (names.filter((each) => {if(each.length > 0)return each})).sort();
+      console.log(namesFiltered);
+
+      setDataControle(namesFiltered);
+    });
   },[])
   console.log(cardsToUpdate);
   return (
     <AllMyPageProvider fns={[datasContainer, setDatasContainer]}>
-      <GlobalContext.Provider value={{addNewDataContainer, counter, removeDataContainer}}>
+      <GlobalContext.Provider value={{addNewDataContainer, counter, removeDataContainer, dataControle}}>
         <button onClick={()=>console.log(datasContainer)} >CONSOLE</button>
         <div className='pageBody'>
           <ClientsSection />
