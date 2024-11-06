@@ -24,7 +24,7 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
   // console.log('RENDERIZOU FILHO');
   // console.log('DATA', dataValue);
   // console.log('INDEX', keyValue);
-
+  // Tr = StyledRow(color)
 
   const getValuesFromRowInput = (rowNum) => {
 
@@ -35,7 +35,7 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
           dataObject[field] = rowDataArr[index].value;
       })
       // data = dataObject;
-      console.log(dataObject);
+      // console.log(dataObject);
       return dataObject;
 
     // console.log('ROWDATA!!->',rowData);
@@ -50,7 +50,7 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
         dataObject[field] = rowDataArr[index].innerHTML;
     })
     // data = dataObject;
-    console.log(dataObject);
+    // console.log(dataObject);
     return dataObject;
   }
   const handleClickCancel = () => {
@@ -61,37 +61,37 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
   const handleClickEdit = (rowNum) => {
     setIsEditing((isEditing) => {
         if(isEditing) {
-          console.log('lala');
+          // console.log('lala');
           var initBody =  {...getValuesFromRowInput(rowNum), categoria: '1'};
           // setDataValue({...getValuesFromRowInput(rowNum), categoria: '1'});
-          console.log({...getValuesFromRowInput(rowNum), categoria: '1'});
+          // console.log({...getValuesFromRowInput(rowNum), categoria: '1'});
           var init = formatDataInit(initBody);
           dataFetch(URLUpdateIten, init).then(r=> setDataValue(r[0]));
           ItensContext.setCounter(ItensContext.counter + 1);
           // console.log('INIT --> ',formatDataInit(initBody));
 
-          console.log('trocou');
+          // console.log('trocou');
         }
       return !isEditing;
     });
   }
   const handleClickDelete = (rowNum) => {
-    console.log(getValuesFromRowTd(rowNum));
+    // console.log(getValuesFromRowTd(rowNum));
   }
   const handleChangeEvent = (value) => {
     // setFieldsValues();
-    console.log('FIELDVALYESSSS',fieldsValues);
+    // console.log('FIELDVALYESSSS',fieldsValues);
   }
   useEffect(() => {
     if (data) {
-      console.log('Data received:', data);
+      // console.log('Data received:', data);
       setDataValue(data);
       setFields(Object.keys(data));
       setFieldsValues(Object.values(data));
     }
   }, [data]); // O useEffect agora depende diretamente de "data"
 
-  Tr = StyledRow(color)
+
   if(!data || Object.keys(data).length === 0){
     return <h1>Nenhum dado</h1>
   }
@@ -108,7 +108,19 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
 
 
           <td key={prefixClass(index)} className={prefixClass(keyValue)} >
-            {isEditing ? <SimpleInput enterOn={false} className={prefixClassInput(keyValue)} onKeyUp={(event) => {if(event.key ==='Enter'){handleClickEdit(keyValue)}}} type='text' upValue={dataValue[fieldName].toString()} /> : (types[index] === 'number' ? parseFloat(dataValue[fieldName]).toFixed(2) : dataValue[fieldName]) }
+            {isEditing ?
+            <SimpleInput
+              enterOn={false}
+              className={prefixClassInput(keyValue)}
+              onKeyUp={(event) => {if(event.key ==='Enter'){handleClickEdit(keyValue)}}}
+              type='text'
+              upValue={dataValue[fieldName].toString()}
+            />
+            :
+            (types[index] === 'number' ?
+              parseFloat(dataValue[fieldName]).toFixed(2)
+              :
+              dataValue[fieldName]) }
           </td>
         )
       }
@@ -152,7 +164,7 @@ RowByFields.propTypes = {
 
 //   useEffect(() => {
 //     if (data) {
-//       console.log('Data received:', data);
+      // console.log('Data received:', data);
 //       setDataValue(data);
 //       setFields(Object.keys(data));
 //       setFieldsValues(Object.values(data));

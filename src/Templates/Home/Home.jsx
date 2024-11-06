@@ -9,6 +9,7 @@ import ClientsSection from '../../Components/ClientsSection/ClientsSection';
 import { AllMyPageProvider } from '../../Contexts/AllMyPageContext';
 import { dataFetch } from '../../functions';
 import { URLFetchControle } from '../../apiURLS';
+import { DataContainerContext, useDataContainerContext } from '../../Contexts/DataContainerContext';
 
 var counter = 0;
 
@@ -39,9 +40,17 @@ export default function Home () {
 
   }
 
+  useEffect(()=>{
+
+    var containers = [...datasContainer];
+    if(containers.length > 1)console.log('CARD', containers[containers.length-1]['card'].props);
+
+  }, [datasContainer])
+
   const addNewDataContainer = (newSearch = '', type = false) => {
     counter++;
-    setDatasContainer([...datasContainer, {links: [], card: <DataContainer onChangeName={changeName} type={type} upAtributes={cardsToUpdate} newSearch={newSearch} key={counter} index={counter}/>, key: counter, name: newSearch}]);
+    var containers = [...datasContainer];
+    setDatasContainer([...datasContainer, {links: [], card: <DataContainer changeClass='' onChangeName={changeName} type={type} upAtributes={cardsToUpdate} newSearch={newSearch} key={counter} index={counter}/>, key: counter, name: newSearch}]);
     console.log(datasContainer);
     // console.log('teste');
   }
@@ -62,19 +71,22 @@ export default function Home () {
   },[])
   console.log(cardsToUpdate);
   return (
-    <AllMyPageProvider fns={[datasContainer, setDatasContainer]}>
-      <GlobalContext.Provider value={{addNewDataContainer, counter, removeDataContainer, dataControle}}>
-        <button onClick={()=>console.log(datasContainer)} >CONSOLE</button>
-        <div className='pageBody'>
-          <ClientsSection />
-          <div className='content'>
+    <DataContainerContext >
+      <AllMyPageProvider fns={[datasContainer, setDatasContainer]}>
+        <GlobalContext.Provider value={{addNewDataContainer, counter, removeDataContainer, dataControle}}>
+          {/* <button onClick={()=>console.log(datasContainer)} >CONSOLE</button> */}
+          <div className='pageBody'>
+            <ClientsSection />
+            <div className='content'>
 
-            {datasContainer.map((data) => data.card)}
-            <ButtonAddDataContainer AddDataContainer={addNewDataContainer}/>
+              {datasContainer.map((data) => data.card)}
+              <ButtonAddDataContainer AddDataContainer={addNewDataContainer}/>
+            </div>
           </div>
-        </div>
-      </GlobalContext.Provider>
-    </AllMyPageProvider>
+        </GlobalContext.Provider>
+      </AllMyPageProvider>
+
+    </DataContainerContext>
   )
 }
 

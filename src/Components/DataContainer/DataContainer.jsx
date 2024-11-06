@@ -41,27 +41,36 @@ var auxSearch = true;
 // var arrValuesFilter = [];
 const ScrollBar =  styledScrollBar();
 const Button = styledButton('#ccc');
-const Div = ({changeColor, children}) => {
+const Div = ({changeColor, children, classname = ''}) => {
+  const [thisClassname, setThisClassname] = useState(classname);
+  useEffect(()=>{
+    setThisClassname(classname)
+  }, [classname])
   return (
     (changeColor ?
-      <div className="card bg-color-grey">{children}</div>
+      <div className={`card bg-color-grey ${thisClassname}`} >{children}</div>
       :
-      <div className="card">{children}</div>
+      <div className={`card ${thisClassname}`}>{children}</div>
     )
   )
 }
 Div.propTypes = {
   changeColor: PropTypes.bool,
   children: PropTypes.node,
+  classname: PropTypes.string,
 }
-function DataContainer({ onChangeName = () => {}, type = false, newSearch = dateNow(), index, upAtributes = []}) {
+function DataContainer({ typeOfContainer = 'OPEN', changeClass = '' ,onChangeName = () => {}, type = false, newSearch = dateNow(), index, upAtributes = []}) {
   //console.log('dataContainer renderizou');
+  const dataContainerContext = useDataContainerContext();
   console.log('COUNTER -->> ', counter++);
+  // const dataContainerContext = useDataContainerContext();
+  // console.log(dataContainerContext);
   const theContext = useContext(GlobalContext);
   // const DataContainerContext = useDataContainerContext();
   const context = useAllMyPageContext();
   console.log('CONTEXT', context);
   // Estado para controlar o texto e o carregamento
+  const [classname, setClassname] = useState(changeClass);
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
   const [search, setSearch] = useState(newSearch);
@@ -75,11 +84,15 @@ function DataContainer({ onChangeName = () => {}, type = false, newSearch = date
   const [isModifier, setIsModifier] = newSearch ? useState(false) : useState(true);
   const refInput = useRef(null);
   const [arrValuesFilter, setarrValuesFilter] = useState([]);
+  const [showSelect, setShowSelect] = useState(false);
   console.log(upAtributes);
   init.body = JSON.stringify({ name: search });
   function fupdate (value) {
     setUpdateCounter(value);
   }
+  useEffect(()=>{
+    setClassname(changeClass);
+  }, [changeClass])
   useEffect(()=>{
     setHasPayment(isClient(search))
   }, [type]);
@@ -197,8 +210,22 @@ function DataContainer({ onChangeName = () => {}, type = false, newSearch = date
   }
   const handleRemoveCard = () => {
     theContext.removeDataContainer(index);
+
   }
 
+  useEffect(()=>{
+    console.log('LINKS', DataContainerContext.getLinks);
+  }, [dataContainerContext.links])
+
+  const handleAddLink = () => {
+    console.log('GETLINKS',dataContainerContext.getLinks());
+    dataContainerContext.setLinks([...dataContainerContext.getLinks(), { card: 'teste', values: 'values'}]);
+  }
+
+  function onChangeSelect (value){
+    console.log(value);
+    setSearch(value);
+  }
   // const  clickhere = (value) => {
   //   console.log(value, context);
   //   context.fns[2]();
@@ -206,15 +233,15 @@ function DataContainer({ onChangeName = () => {}, type = false, newSearch = date
 
   console.log(search)
   return (
-    <ScrollBar>
       <DataContainerContext data={{search: search}}>
-        <Div changeColor={isModifier}>
+        <Div classname={classname} changeColor={isModifier}>
           <div style={{float: 'right'}}>
-            {isModifier && <button >addLink</button>}
+            {console.log('DATACONTAINERCONTEXT', dataContainerContext)}
+            {isModifier && <button onClick={()=>{handleAddLink()}}>addLink</button>}
             {closeble && <BClose onClick={handleRemoveCard} />}
             <input ref={refInput} onChange={() => {setCloseble(!closeble)}} className='checkCloseble' name='toggleCloseble' type="checkbox" />
             {closeble && <><InputSearch thisValue={search} onKeyUp={handleKeyUp}/></>}
-            <DataSelect data={arrValuesFilter}/>
+            {showSelect || arrValuesFilter.length>0 ? <DataSelect onChange={onChangeSelect} data={arrValuesFilter}/> : <button onClick={()=>{setShowSelect(!showSelect); }} >x</button>}
           </div>
           <h4 className="card-header">{search}</h4>
           {/* Se estiver carregando, mostra o ícone de carregamento, senão mostra o texto */}
@@ -225,7 +252,6 @@ function DataContainer({ onChangeName = () => {}, type = false, newSearch = date
           {hasPayment && ( isPaying ? <SimpleInput onBlur={()=>setIsPaying(false)} placeholder={'Digite o Valor a ser Pago'} onKeyUp={handlePayment} /> : <Button onClick={()=>{setIsPaying(!isPaying)}}>Pagamento</Button>)}
         </Div>
       </DataContainerContext>
-    </ScrollBar>
   );
 }
 
@@ -237,4 +263,6 @@ DataContainer.propTypes = {
   upAtributes: PropTypes.array,
   type: PropTypes.bool,
   onChangeName: PropTypes.func,
+  changeClass: PropTypes.string,
+  typeOfContainer: PropTypes.string,
 };

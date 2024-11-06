@@ -67,7 +67,7 @@ export default function ClientsSection () {
     //     const sortArr = ordenarSemMaiusculas(arr);
     //     setClients(sortArr);
     //   });
-    dataFetch('http://localhost/fetchControle').then(data=>{
+    dataFetch(URLFetchControle).then(data=>{
       const arr = data.split(/\n|\r/);
       const sortArr = ordenarSemMaiusculas(arr);
       setClients(sortArr);

@@ -19,21 +19,38 @@ const datafetch = (URL, init) => new Promise ((resolve, reject)=>{
 //     var page = req.body.page;
 //     var pglimit = req.body.limit;
 
-export default function TableByFields({doFetch = false, filterValue = '', fieldNames = ['id', 'name'], types = ['string', 'string']}){
+
+// var object = {};
+
+var originFields = [];
+export default function TableByFields({filterValue = '', fieldNames = ['id', 'name'], types = ['string', 'string']}){
   const ItensContext = useItensContext();
   const [itens, setItens] = useState([]);
   const [counter, setCounter] = useState(0);
+  const [sortByField, setSortByField] = useState();
+  useEffect(()=>{
+    var object = {};
+    for(var i = 0; i < fieldNames.length; i++){
+      object[fieldNames[i]] = true;
+    }
+    console.log('OBJECT', object);
+    originFields = object;
+    setSortByField(object);
+  }, [fieldNames])
+  // console.log(object);
+  // originFields = object;
 
   console.log('FIELDNAMES', fieldNames);
+
   // console.log('TABLERENDERIZOU');
   // useEffect(()=>{
-  //   console.log('DOFETCH', doFetch);
-  //   // console.log()
+    // console.log('DOFETCH', doFetch);
+    // console.log()
   //   getInit({name: filterValue, page:1, limit: 10}).then(r=>{
   //     var init = r;
-  //     console.log(r);
+      // console.log(r);
   //     datafetch(URLSearchIten, init).then(r=>{
-  //       console.log(r);
+        // console.log(r);
   //     })
   //   });
 
@@ -44,7 +61,7 @@ export default function TableByFields({doFetch = false, filterValue = '', fieldN
     fetch(URLallitens).then(r=>{
       r.json().then(r=>{
         // console.log(r);
-        setItens(r);
+        setItens(r.reverse());
         setCounter(counter+1);
       })
     })
@@ -56,16 +73,16 @@ export default function TableByFields({doFetch = false, filterValue = '', fieldN
   useEffect(()=>{
     getInit({name: filterValue}).then(r=>{
       var init = r;
-      console.log(r);
+      // console.log(r);
       datafetch(URLSearchIten, init).then(r=>{
-        console.log(r);
+        // console.log(r);
         setItens(r);
         setCounter(counter+1);
       })
     });
     // fetch(URLallitens).then(r=>{
     //   r.json().then(r=>{
-    //     // console.log(r);
+        // console.log(r);
     //     setItens(r);
     //     setCounter(counter+1);
     //   })
@@ -75,6 +92,10 @@ export default function TableByFields({doFetch = false, filterValue = '', fieldN
     }
   },[]);
   // itens && console.log('ITENSATT', itens[0]);
+
+  useEffect(()=>{
+    console.log(sortByField);
+  }, [sortByField])
 
   useEffect(()=>{
     setCounter(counter+1);
@@ -87,14 +108,48 @@ export default function TableByFields({doFetch = false, filterValue = '', fieldN
           <thead>
             <tr>
                {fieldNames.map((fieldName, index) => {
-                return <td key={index}>{fieldName}</td>
+                return <>
+                <td key={`tbthtrtd${index}`}
+                  onClick={
+                  ()=>{
+                    // const newfield = originFields[fieldName] = false;
+
+                    setSortByField({...originFields,  [fieldName]: !sortByField[fieldName] })
+                    // console.log(originFields);
+                    // console.log(itens[0][fieldName]);
+                    var itensSort;
+                    //  = itens.sort((a, b) => a[fieldName].toUpperCase().localeCompare(b[fieldName].toUpperCase()));
+                    try {
+                      // if(isNaN(itens[0][fieldName])) itensSort = itens.sort((a, b) => a[fieldName].toUpperCase().localeCompare(b[fieldName].toUpperCase()));
+                      isNaN(itens[0][fieldName])
+                        ?
+                        itensSort = itens.sort((a, b) => a[fieldName].toUpperCase().localeCompare(b[fieldName].toUpperCase()))
+                        :
+                        itensSort = itens.sort((a, b) => a[fieldName] - b[fieldName]);
+
+                      if(sortByField[fieldName] === false) itensSort = itens.reverse();
+
+                      setItens(itensSort);
+                      setCounter(counter+1);
+
+                    } catch (error) {
+                      console.log(error)
+                    }
+                    console.log('SORTBYFIELD', typeof itens[0][fieldName]);
+                    // console.log(itens);
+                    // console.log(sortByField);
+                  }
+                  }
+                  >
+                    {fieldName}
+                </td></>
                })}
             </tr>
           </thead>
           <tbody>
             {itens.map((value, index)=>{
-              console.log('VALUE DENTRO DO MAP', value['name']);
-              console.log('FILTER VALUE',filterValue);
+              // console.log('VALUE DENTRO DO MAP', value['name']);
+              // console.log('FILTER VALUE',filterValue);
               if(value['name'].toUpperCase().includes(filterValue.toUpperCase()) || filterValue === '') return <RowByFields fieldNames={fieldNames} types={types} data={value} key={index} keyValue={index}/>
             })}
           </tbody>
@@ -114,4 +169,5 @@ TableByFields.propTypes = {
   doFetch: P.bool,
   fieldNames: P.array,
   types: P.array,
+  sortField: P.string,
 }

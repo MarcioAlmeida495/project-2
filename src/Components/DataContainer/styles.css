@@ -9,11 +9,16 @@
   text-decoration: bold;
   color: white;
   align-items: center;
-}.card {
+
+}
+.minimize{
+  height: 200px;
+}
+
+.card {
   position: relative;
   padding: 5px;
   width: 100%;
-  height: 500px;
   background-color: #f8f9fae3; /* Cor de fundo */
   border: 1px solid #ddd;    /* Borda fina */
   border-radius: 2px;       /* Bordas arredondadas */

@@ -5,8 +5,8 @@
 .content{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  grid-template-rows: minmax(0px, auto);
-  gap: 30px;
+  grid-template-rows: 80vh;
+  gap: 10px;
   padding: 20px;
 }
 body{
@@ -32,7 +32,7 @@ body{
 /* Aplica a estilização na barra de rolagem de todos os elementos */
 ::-webkit-scrollbar {
   width: 8px; /* Largura da barra de rolagem vertical */
-  height: 5px; /* Altura da barra de rolagem horizontal */
+  height: 8px; /* Altura da barra de rolagem horizontal */
 }
 
 /* Fundo da área de rolagem */
@@ -60,3 +60,6 @@ body{
 
 /* Adicionar estilos para navegadores que não suportam WebKit (opcional) */
 
+.minimize{
+  height: 200px;
+}
