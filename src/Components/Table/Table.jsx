@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import './styles.css';
 import P from 'prop-types';
 import Row from './Rows/Row';
-import { URLallitens, URLSearchIten } from '../../../../apiURLS';
-import { useItensContext } from '../../../../Contexts/ItensContexts';
-import { getInit } from '../../usuals';
+import { URLallitens, URLSearchIten } from '../../apiURLS';
+import { useItensContext } from '../../Contexts/ItensContexts';
+import { getInit } from '../../Templates/ItensTable/usuals';
 const datafetch = (URL, init) => new Promise ((resolve, reject)=>{
   fetch(URL, init).then(r=>{
     r.json()

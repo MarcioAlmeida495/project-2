@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import './styles.css';
 import P from 'prop-types';
-import {SimpleInput} from '../../../../../Components/Inputs/SimpleImput/SimpleInput';
+import { SimpleInput } from '../../Inputs/SimpleImput/SimpleInput';
 
 const prefixClass = (key) => `trRow[${key}]`;
 

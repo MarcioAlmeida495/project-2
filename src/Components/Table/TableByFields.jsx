@@ -23,9 +23,9 @@ const datafetch = (URL, init) => new Promise ((resolve, reject)=>{
 // var object = {};
 
 var originFields = [];
-export default function TableByFields({filterValue = '', fieldNames = ['id', 'name'], types = ['string', 'string']}){
+export default function TableByFields({ dataItens = [], filterValue = '', fieldNames = ['id', 'name'], types = ['string', 'string']}){
   const ItensContext = useItensContext();
-  const [itens, setItens] = useState([]);
+  const [itens, setItens] = useState(dataItens);
   const [counter, setCounter] = useState(0);
   const [sortByField, setSortByField] = useState();
   useEffect(()=>{
@@ -170,4 +170,5 @@ TableByFields.propTypes = {
   fieldNames: P.array,
   types: P.array,
   sortField: P.string,
+  dataItens: P.array,
 }

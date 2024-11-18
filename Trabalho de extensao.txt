@@ -1,0 +1,96 @@
+
+
+
+CURSOS DE ADS
+PROJETO DE EXTENSÃO I – CONHECENDO A EXTENSÃO
+
+DESCRIÇÃO: Nessa etapa inicial, o objeto é CONHECER o ambiente de extensão e, para isso, uma primeira atividade envolve uma visita a uma empresa, ONG ou comunidades
+para entender seu contexto, sua missão e suas necessidades, procurando identificar oportunidades para atividades de extensão. As atividades propostas incluem um
+planejamento de visita, contatos iniciais, a realização de uma reunião com os representantes das ONGs, comunidades ou empresas e, sempre que possível, a participação
+em atividades locais para se familiarizar com o ambiente. Além disso, é importante estudar documentos e materiais fornecidos pela entidade. O resultado esperado é uma
+compreensão detalhada do funcionamento, dos objetivos e dos desafios enfrentados pela instituição.
+A Extensão Universitária na área de Computação desempenha um papel crucial ao conectar o conhecimento acadêmico com as necessidades da comunidade, promovendo a inclusão
+digital e a alfabetização tecnológica através de cursos e oficinas destinados a segmentos com acesso limitado à tecnologia. Projetos desenvolvidos abrangem desde a
+criação de softwares customizados para ONGs, melhorando sua eficiência operacional, até a organização de hackathons focados em soluções tecnológicas para desafios
+sociais em saúde, educação e sustentabilidade. Além disso, incluem workshops de segurança cibernética para conscientizar sobre práticas seguras na internet, iniciativas
+ de robótica educacional em escolas para estimular o interesse em ciência em tecnologia e desenvolvimento de tecnologias assistivas para pessoas com deficiência.
+ Programas de reciclagem e recondicionamento de equipamentos eletrônicos antigos visam reduzir o lixo eletrônico e apoiar comunidades carentes, enquanto a consultoria
+ tecnológica para pequenas empresas locais ajuda na navegação digital e expansão de operações. Outras áreas contemplam o desenvolvimento de jogos educacionais e
+  iniciativas de sustentabilidade tecnológica, promovendo o uso eficiente de recursos. Esses projetos podem ser implementados em escolas, ONGs, pequenas empresas,
+  comunidades carentes e outros locais que se beneficiam do avanço tecnológico e educacional proporcionado pela extensão universitária.
+
+
+
+
+O QUÊ REALIZAR:
+
+	Para iniciar seu projeto, você deverá preencher a CARTA DE APRESENTAÇÃO e escolher uma organização (empresas, comércios, templos, escolas etc.) para visitar e se apresentar.
+	Após a autorização da organização, com o preenchimento do TERMO DE AUTORIZAÇÃO PARA REALIZAÇÃO DAS ATIVIDADES EXTENSIONISTAS, inicie o seu projeto.
+	Muito bem! Agora o que fazer?
+
+Planejamento de Visita
+Elaborar um plano detalhado para a visita, incluindo objetivos, agenda e materiais necessários.
+Identificar as principais áreas de interesse e as questões a serem exploradas durante a visita.
+Contatos Iniciais
+Estabelecer comunicação com os representantes das ONGs, comunidades ou empresas para agendar reuniões e visitas.
+Confirmar a disponibilidade e obter informações preliminares sobre a instituição.
+Realização de Reuniões
+Conduzir reuniões iniciais com os representantes das ONGs, comunidades ou empresas para discutir o contexto, a missão e as necessidades da instituição.
+Documentar as informações coletadas durante as reuniões, incluindo os desafios enfrentados e as oportunidades de colaboração.
+Participação em Atividades Locais
+Participar de atividades e eventos organizados pela instituição para se familiarizar com o ambiente e entender melhor o funcionamento diário.
+Observar as operações e interagir com os membros da comunidade para obter insights práticos.
+Estudo de Documentos e Materiais
+Analisar documentos e materiais fornecidos pela instituição, como relatórios, estatísticas e planos estratégicos.
+Identificar informações relevantes que possam influenciar o planejamento das atividades de extensão.
+
+
+
+
+Identificação de Oportunidades de Extensão
+Avaliar as necessidades identificadas e propor soluções ou projetos que possam ser implementados para apoiar a instituição.
+Elaborar um relatório detalhado com recomendações e possíveis atividades de extensão, alinhadas aos eixos temáticos.
+
+Coletou essas informações? Agora você poderá preencher o relatório de seu primeiro Projeto de Extensão. Muito bem!
+
+COMPETÊNCIAS:
+Programação e Desenvolvimento de Software: Habilidade em escrever códigos eficientes e criar aplicações.
+Desenvolvimento Web e Mobile: Conhecimento em tecnologias e frameworks para construir aplicações web e móveis.
+Segurança Cibernética: Entendimento de práticas de segurança online e proteção de dados.
+Robótica e Automação: Capacidade de desenvolver e programar robôs para diversas aplicações.
+Tecnologias Assistivas: Conhecimento em desenvolver soluções tecnológicas que aumentem a acessibilidade.
+Reciclagem e Recondicionamento de Hardware: Competência em reparar e atualizar equipamentos eletrônicos.
+Consultoria e Suporte Técnico: Capacidade de fornecer orientação e suporte técnico a pequenas empresas e ONGs.
+Desenvolvimento de Jogos Educacionais: Habilidade em criar jogos digitais com objetivos pedagógicos.
+Sistemas Sustentáveis: Conhecimento em desenvolver sistemas tecnológicos eficientes em termos de recursos e energia.
+
+
+
+
+
+SOFT SKILLS DESENVOLVIDAS:
+Comunicação Eficaz: Habilidade de comunicar ideias técnicas de maneira clara e acessível para diferentes públicos.
+Trabalho Colaborativo: Capacidade de colaborar com colegas e membros da comunidade.
+Pensamento Crítico e Resolução de Problemas: Habilidade de analisar problemas complexos e desenvolver soluções criativas e eficazes.
+Empatia e Sensibilidade Social: Capacidade de entender e se importar com as necessidades da comunidade e dos usuários finais.
+Adaptabilidade e Flexibilidade: Capacidade de se adaptar a novas tecnologias e mudanças nos projetos.
+Iniciativa e Proatividade: Capacidade de tomar a iniciativa e ser proativo na identificação e resolução de problemas.
+Ética e Responsabilidade: Compromisso com a ética profissional e a responsabilidade social no desenvolvimento e implementação de tecnologias.
+
+OBJETIVOS DE APRENDIZAGEM:
+Os objetivos de aprendizagem do projeto de extensão em Computação incluem desenvolver competências técnicas preparando os alunos para desafios tecnológicos e sociais e promovendo uma formação integral. Está relacionado ao fato de disseminar o saber e a cultura ensinados na faculdade e a formação de novos saberes a partir das problemáticas identificadas na comunidade, que, aliados fortificam as habilidades desenvolvidas no decorrer do curso, preparando o egresso para uma atuação global, focado no mercado de trabalho e atuante junto à comunidade.
+
+BIBLIOGRAFIA:
+ASSUNÇÃO, R. M., & OLIVEIRA, J. P. (2016). Inclusão digital e alfabetização tecnológica: um estudo de caso. Salvador: EDUFBA.
+BATISTA, E. S. (2012). Tecnologias assistivas e inclusão digital. São Paulo: Cultura Acadêmica.
+KEEGAN, V. (2015). Desenvolvimento de jogos digitais. São Paulo: Novatec.
+MENDES, C. L. (2018). Segurança da informação: uma visão gerencial. São Paulo: Saraiva.
+MONTEIRO, M. (2014). Design para a Internet: projetando a experiência perfeita. Rio de Janeiro: Alta Books.
+NORTON, P. (2002). Introdução à informática. São Paulo: Makron Books.
+NUNES, C. S. (2017). Robótica educacional: princípios e práticas. Porto Alegre: Bookman.
+PEREIRA, J. R. M., & MENDES, L. F. (2015). Hackathons: inovando com maratonas de programação. São Paulo: Editora Blucher.
+PRESSMAN, R. S. (2019). Engenharia de software: uma abordagem profissional. 8. ed. Porto Alegre: AMGH.
+RIBEIRO, M. A., & ALVES, T. M. (2019). Sustentabilidade e tecnologia: estratégias e práticas. Rio de Janeiro: Elsevier.
+SOMMERVILLE, I. (2011). Engenharia de Software. 9. ed. São Paulo: Pearson.
+TANENBAUM, A. S., & WETHERALL, D. J. (2011). Redes de computadores. 5. ed. São Paulo: Pearson.
+

@@ -1,11 +1,13 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import './styles.css';
 import P from 'prop-types';
-import {SimpleInput} from '../../../../../Components/Inputs/SimpleImput/SimpleInput';
+import {SimpleInput} from '../../Inputs/SimpleImput/SimpleInput';
+// import { SimpleInput } from '../../Inputs/SimpleImput/SimpleInput';
 import {EditIten} from '../../EditIten/EditIten';
-import { formatDataInit, dataFetch } from '../../../../../functions';
-import { useItensContext } from '../../../../../Contexts/ItensContexts';
-import { URLUpdateIten } from '../../../../../apiURLS';
+import { formatDataInit, dataFetch } from '../../../functions';
+import { useItensContext } from '../../../Contexts/ItensContexts';
+import { URLUpdateIten, URLDeleteIten } from '../../../apiURLS';
+// import { URLUpdateIten } from '../../apiURLS';
 import { StyledRow } from './styledRow';
 const prefixClass = (key) => `trRow[${key}]`;
 const prefixClassInput = (key) => `data${prefixClass(key)}`;
@@ -26,6 +28,9 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
   // console.log('INDEX', keyValue);
   // Tr = StyledRow(color)
 
+  const UpdateComponent = () => {
+    ItensContext.setCounter(ItensContext.counter + 1);
+  }
   const getValuesFromRowInput = (rowNum) => {
 
       var rowData = document.getElementsByClassName(prefixClassInput(rowNum));
@@ -66,7 +71,11 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
           // setDataValue({...getValuesFromRowInput(rowNum), categoria: '1'});
           // console.log({...getValuesFromRowInput(rowNum), categoria: '1'});
           var init = formatDataInit(initBody);
-          dataFetch(URLUpdateIten, init).then(r=> setDataValue(r[0]));
+          dataFetch(URLUpdateIten, init)
+            .then(r=>
+              UpdateComponent()
+              // setDataValue(r[0])
+            );
           ItensContext.setCounter(ItensContext.counter + 1);
           // console.log('INIT --> ',formatDataInit(initBody));
 
@@ -76,7 +85,17 @@ export default function RowByFields({functions = {},data = {}, fieldNames = ['id
     });
   }
   const handleClickDelete = (rowNum) => {
-    // console.log(getValuesFromRowTd(rowNum));
+    const values = getValuesFromRowTd(rowNum);
+    const entries = Object.entries(values)
+    console.log(entries);
+    const init = formatDataInit(values);
+    console.log('init', init);
+    dataFetch(URLDeleteIten, init)
+    .then(r=>{
+      console.log(r);
+      UpdateComponent();}
+    );
+    console.log(values)
   }
   const handleChangeEvent = (value) => {
     // setFieldsValues();

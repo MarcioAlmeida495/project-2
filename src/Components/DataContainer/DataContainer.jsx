@@ -17,6 +17,8 @@ import { styledScrollBar, styledButton } from '../../StyledComponents';
 import { useDataContainerContext } from '../../Contexts/DataContainerContext';
 import { dataFetch, formatDataInit } from '../../functions';
 import { DataSelect } from '../Inputs/DataSelect/DataSelect';
+import { LinkedAccounts } from '../LinkedAccounts/LinkedAccounts';
+import SelectInput from '@mui/material/Select/SelectInput';
 // import { handleKeyUp } from './handles';
 
 
@@ -74,6 +76,7 @@ function DataContainer({ typeOfContainer = 'OPEN', changeClass = '' ,onChangeNam
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
   const [search, setSearch] = useState(newSearch);
+  const [linkedAccounts, setLinkedAccounts] = useState([]);
   const [total, setTotal] = useState(0.00);
   const [closeble, setCloseble] = useState(true);
   const [newBuy, setNewBuy] = useState('');
@@ -85,17 +88,27 @@ function DataContainer({ typeOfContainer = 'OPEN', changeClass = '' ,onChangeNam
   const refInput = useRef(null);
   const [arrValuesFilter, setarrValuesFilter] = useState([]);
   const [showSelect, setShowSelect] = useState(false);
+  const [showModel, setShowModel] = useState(false);
   console.log(upAtributes);
   init.body = JSON.stringify({ name: search });
   function fupdate (value) {
     setUpdateCounter(value);
   }
   useEffect(()=>{
+    console.log('linked accounts changed', linkedAccounts);
+  }, [linkedAccounts])
+  useEffect(()=>{
     setClassname(changeClass);
   }, [changeClass])
   useEffect(()=>{
     setHasPayment(isClient(search))
   }, [type]);
+
+  useEffect(()=>{
+    if(search) setIsModifier(false);
+
+    console.log('NEWSEARCH IN DATA CONTAINER',search)
+  },[search])
 
   useEffect(()=>{
     upAtributes.push({index: index, updateCounter: updateCounter, setUpdateCounter: fupdate});
@@ -126,6 +139,7 @@ function DataContainer({ typeOfContainer = 'OPEN', changeClass = '' ,onChangeNam
       setText(r); // Define os dados recebidos como texto
       setTotal(calcularTotal(r));
       setIsLoading(false); // Termina o carregamento
+      if(search.length > 0)setIsModifier(false);
     })
   }, [search]);
 
@@ -167,14 +181,6 @@ function DataContainer({ typeOfContainer = 'OPEN', changeClass = '' ,onChangeNam
       // auxSearch = false;
     }
 
-    if(e.key === 'Backspace') {
-      auxSearch = false;
-    }
-    else {
-      auxSearch = true;
-      console.log(auxSearch)
-    }
-
     console.log(e.key);
     if(e.key === 'Enter') {
       // console.log(value);
@@ -190,15 +196,21 @@ function DataContainer({ typeOfContainer = 'OPEN', changeClass = '' ,onChangeNam
 
   };
   const enterUp = (e) => {
-    e.key ==='Enter' && handleSendData();
-  }
-  const handleChange = (value) => {
-    setNewBuy(value);
-  }
+    if(linkedAccounts.length > 0){
+      linkedAccounts.forEach(each => {
+        handleSendData(e.target.value, each);
+      })
+    }
+    else{
+      console.log(e.target.value);
+      handleSendData(e.target.value, search);
 
-  const handleSendData = () => {
+    }
 
-    init.body = JSON.stringify({ name: search, compra: newBuy});
+  }
+  const handleSendData = (value, name) => {
+
+    init.body = JSON.stringify({ name: name, compra: value});
     console.log(init);
     fetch(URLbuy, init)
       .then(r=> r.json())
@@ -218,6 +230,7 @@ function DataContainer({ typeOfContainer = 'OPEN', changeClass = '' ,onChangeNam
   }, [dataContainerContext.links])
 
   const handleAddLink = () => {
+    setShowModel(!showModel);
     console.log('GETLINKS',dataContainerContext.getLinks());
     dataContainerContext.setLinks([...dataContainerContext.getLinks(), { card: 'teste', values: 'values'}]);
   }
@@ -236,11 +249,13 @@ function DataContainer({ typeOfContainer = 'OPEN', changeClass = '' ,onChangeNam
       <DataContainerContext data={{search: search}}>
         <Div classname={classname} changeColor={isModifier}>
           <div style={{float: 'right'}}>
+            {linkedAccounts.length>0 && linkedAccounts.map((acc, index) => {return <h3 key={index}>{acc}</h3>})}
             {console.log('DATACONTAINERCONTEXT', dataContainerContext)}
-            {isModifier && <button onClick={()=>{handleAddLink()}}>addLink</button>}
+            {isModifier && <button onClick={()=>{handleAddLink()}}> {linkedAccounts.length > 0 ? 'Close This' : 'Link Accounts'} </button>}
+            {showModel && <LinkedAccounts func={(e)=>{setLinkedAccounts(e)}}></LinkedAccounts>}
             {closeble && <BClose onClick={handleRemoveCard} />}
             <input ref={refInput} onChange={() => {setCloseble(!closeble)}} className='checkCloseble' name='toggleCloseble' type="checkbox" />
-            {closeble && <><InputSearch thisValue={search} onKeyUp={handleKeyUp}/></>}
+            {closeble && linkedAccounts.length ===0 && <><InputSearch thisValue={search} onKeyUp={handleKeyUp}/></>}
             {showSelect || arrValuesFilter.length>0 ? <DataSelect onChange={onChangeSelect} data={arrValuesFilter}/> : <button onClick={()=>{setShowSelect(!showSelect); }} >x</button>}
           </div>
           <h4 className="card-header">{search}</h4>
@@ -248,7 +263,7 @@ function DataContainer({ typeOfContainer = 'OPEN', changeClass = '' ,onChangeNam
           <div className="card-context">{isLoading ? loading : <TextDivider updateComponent={()=>setUpdateCounter(updateCounter+1)} text={text}/>}</div>
           <div className='showTotal'>{`Valor Total: ${total.toFixed(2)}`}</div>
           {/* Input abaixo para realizar uma compra */}
-          <SimpleInput forceValue={newBuy} onKeyUp={enterUp} onChange={handleChange} placeholder={'Uma Nova Compra'}/>
+          <SimpleInput forceValue={newBuy} onKeyUp={enterUp} placeholder={'Uma Nova Compra'}/>
           {hasPayment && ( isPaying ? <SimpleInput onBlur={()=>setIsPaying(false)} placeholder={'Digite o Valor a ser Pago'} onKeyUp={handlePayment} /> : <Button onClick={()=>{setIsPaying(!isPaying)}}>Pagamento</Button>)}
         </Div>
       </DataContainerContext>

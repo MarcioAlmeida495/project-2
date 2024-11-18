@@ -9,9 +9,12 @@ import { SimpleInput } from "../Inputs/SimpleImput/SimpleInput";
 import { InputDate } from "../Inputs/InputDate/InputDate";
 import { dataFetch, formatData, formatDataInit, formatDate } from '../../functions';
 import { URLAddClient, URLFetchControle } from "../../apiURLS";
+import { StyledDivButtonClientSection, StyledButtonInClientSection, StylesProvider } from "./StyledComponents";
 // import { useDataContainerContext } from "../../Contexts/DataContainerContext";
 const Button = styledButton();
-
+const DivButtonClientSection = StyledDivButtonClientSection();
+const ButtonInClientSection = StyledButtonInClientSection();
+const DivStylesProvider = StylesProvider();
 function ordenarSemMaiusculas(array) {
   return array.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 }
@@ -88,6 +91,7 @@ export default function ClientsSection () {
   };
   console.log(context)
   return (
+    <DivStylesProvider>
     <section ref={sectionRef} className={'ClientsSection'}>
       <ButtonMenu onClick={Open} />
 
@@ -125,10 +129,10 @@ export default function ClientsSection () {
       {open && clients.map((client, index) => {
         if (client.length > 0 && client.toUpperCase().includes(value.toUpperCase())) {
            return (
-              <div key={index}>
+              <DivButtonClientSection key={index}>
                 <button className="clientsButton" onClick={() =>{handleSearch(client, true)}}>{client}</button>
-                <button>Delete</button>
-              </div>
+                <ButtonInClientSection/>
+              </DivButtonClientSection>
            )
 
         }
@@ -136,5 +140,6 @@ export default function ClientsSection () {
       })}
 
     </section>
+    </DivStylesProvider>
   );
 }

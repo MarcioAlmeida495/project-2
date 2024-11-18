@@ -15,5 +15,6 @@ export const URLUpdateIten = `${prefixSeccao7}/updateIten`;
 export const URLallitens = `${prefixSeccao7}/getallitens`;
 export const URLcadNewIten = `${prefixSeccao7}/cadNewItem`;
 export const URLSearchIten = `${prefixSeccao7}/searchItens`;
+export const URLDeleteIten = `${prefixSeccao7}/product-delete`
 
 

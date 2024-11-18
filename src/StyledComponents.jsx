@@ -16,7 +16,7 @@ export const styledButton = (bgcolor = '#1E90FF', width = vWidth) => styled.butt
   margin: 1px;
   width: ${width};
   box-sizing: border-box;
-  border: 2px solid #adacac;
+  border: none;
   background-color: ${bgcolor};
   padding: 10px;
   font-size: 18px;

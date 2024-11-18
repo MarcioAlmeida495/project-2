@@ -1,4 +1,27 @@
-.ClientsSection{
+import styled from "styled-components";
+
+export const StyledDivButtonClientSection = () => styled.div`
+  width: 100%;
+  height: 55px;
+  box-sizing: border-box;
+`
+export const StyledButtonInClientSection = () => styled.button`
+  width: 5%;
+  float: right;
+  border: none;
+  height: 40px;
+  box-sizing: border-box;
+  background-color: #007baa;
+
+  &:hover {
+    background-color: #555;
+    cursor: pointer;
+  }
+
+`
+
+export const StylesProvider = () => styled.div`
+&.ClientsSection{
   float: left;
   width: 250px;
   height: 94vh;
@@ -6,7 +29,7 @@
   overflow: auto;
   box-sizing: border-box;
 }
-.clientsButton{
+&.clientsButton{
   background-color: #007bff; /* Cor de fundo do botão */
   margin: 0px;
   height: 40px;
@@ -18,14 +41,14 @@
   cursor: pointer;           /* Cursor de mãozinha ao passar */
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
-.clientsButton:hover{
+&.clientsButton:hover{
   background-color: #0056b3; /* Cor de fundo mais escura no hover */
   box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5); /* Sombra ao passar o mouse */
 }
-.Open{
+&.Open{
   animation: slideSlowly 200ms ease-in-out forwards;
 }
-.Close{
+&.Close{
   animation: slideSlowly-left 200ms ease-in-out forwards;
 }
 @keyframes slideSlowly{
@@ -46,3 +69,5 @@
     box-shadow: none;
   }
 }
+
+`

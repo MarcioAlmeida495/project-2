@@ -12,7 +12,7 @@ export function SimpleInput ({enterOn = true, onBlur = () => {}, className = '',
       onKeyUp(event);
       setValue('');
     }
-    if(!enterOn) onKeyUp(event);
+    // if(!enterOn) onKeyUp(event);
   }
 
   useEffect(() => {
@@ -22,17 +22,22 @@ export function SimpleInput ({enterOn = true, onBlur = () => {}, className = '',
   const myOwnonChange = (event) => {
     setValue(event.target.value);
 
-    onChange(inputRef.current.value);
+    // onChange(inputRef.current.value);
   }
   return <input
     onKeyUp={(e) => myKeyUp(e)}
     value={value}
     className={`simpleinput ${className}`}
-    ref={inputRef} onChange={(e) => myOwnonChange(e)}
+    ref={inputRef}
+    onChange={(e) => myOwnonChange(e)}
     placeholder={placeholder}
     name={formFieldName}
     onBlur={()=>{onBlur()}}
     autoComplete='off'
+    onContextMenu={(event)=>{
+      event.preventDefault();
+      console.log('teste')
+    }}
   />
 
 }

@@ -1,0 +1,7 @@
+CRUD clientes, itens, fornecedores
+
+deve-se relacionar a compra de itens com o cliente.
+
+criar um componente de tabela q receba os dados dinamicamente, para que se possa usar em diferentes ocasiões
+ideia { data : }
+

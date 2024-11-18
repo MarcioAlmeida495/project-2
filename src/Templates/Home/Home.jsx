@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
 // import '../App.css';;
 import './styles.css';
 import '../../App.css';
-import p from 'prop-types'
+import P from 'prop-types'
 import DataContainer from '../../Components/DataContainer/DataContainer';
 import ButtonAddDataContainer from '../../Components/ButtonAddDataContainer/ButtonAddDataContainer';
 import ClientsSection from '../../Components/ClientsSection/ClientsSection';
@@ -24,9 +24,10 @@ var cardsToUpdate = [];
 
 export const GlobalContext = React.createContext();
 
-export default function Home () {
+export default function Home ({onUnMount = ()=>{}}) {
   const [datasContainer, setDatasContainer] = useState([]);
   const [dataControle, setDataControle] = useState([]);
+  const HomeRef = useRef();
   const removeDataContainer = (index) => {
     // console.log(datasContainer.map(e => e.key!=index));
     setDatasContainer(datasContainer.filter(e => e.key != index));
@@ -43,10 +44,19 @@ export default function Home () {
   useEffect(()=>{
 
     var containers = [...datasContainer];
-    if(containers.length > 1)console.log('CARD', containers[containers.length-1]['card'].props);
+    // if(containers.length > 1)console.log('CARD', containers[containers.length-1]['card'].props);
+    for(var i=0; i<containers.length; i++){
+      console.log(containers[i]['card']);
+    }
 
   }, [datasContainer])
 
+  useEffect(()=>{
+    return () => {
+      // console.log('ONUNMOUNT -- >> ', React.cloneElement(Home))
+      // onUnMount(React.cloneElement(HomeRef));
+    }
+  },[])
   const addNewDataContainer = (newSearch = '', type = false) => {
     counter++;
     var containers = [...datasContainer];
@@ -71,6 +81,7 @@ export default function Home () {
   },[])
   console.log(cardsToUpdate);
   return (
+    <div ref={HomeRef} >
     <DataContainerContext >
       <AllMyPageProvider fns={[datasContainer, setDatasContainer]}>
         <GlobalContext.Provider value={{addNewDataContainer, counter, removeDataContainer, dataControle}}>
@@ -78,7 +89,6 @@ export default function Home () {
           <div className='pageBody'>
             <ClientsSection />
             <div className='content'>
-
               {datasContainer.map((data) => data.card)}
               <ButtonAddDataContainer AddDataContainer={addNewDataContainer}/>
             </div>
@@ -87,7 +97,11 @@ export default function Home () {
       </AllMyPageProvider>
 
     </DataContainerContext>
+    </div>
   )
 }
 
+Home.propTypes = {
+  onUnMount: P.func,
+}
 

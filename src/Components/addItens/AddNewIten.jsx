@@ -1,9 +1,10 @@
 import { useContext, useEffect, useRef } from "react";
 import { styledButton, styledInputAddIten } from "./styles";
-import { ItensContextProvider, useItensContext } from "../../../../Contexts/ItensContexts";
+import { useItensContext } from "../../Contexts/ItensContexts";
 import P from 'prop-types';
-import { URLcadNewIten } from "../../../../apiURLS";
+import { URLcadNewIten } from "../../apiURLS";
 import {postFetchProduct, postFetchProductPromise} from './functions';
+import { useAddItensContext } from "./addItensContext";
 
 const InputDesc = styledInputAddIten(200);
 const InputValue = styledInputAddIten(200);
@@ -12,6 +13,8 @@ const ButtonConfirm = styledButton;
 
 export const AddNewIten = ({keyValue = 0, handleRemove, handleIncrementCounter}) =>{
   const ItensContext = useItensContext();
+  const addItensContext = useAddItensContext();
+  console.log('ITENSCONTEXTETT ', addItensContext)
   console.log('ITENSSSSCONTEXXTT ----- ', ItensContext);
   const refDesc = useRef(null);
   const refSell = useRef(null);
@@ -39,9 +42,9 @@ export const AddNewIten = ({keyValue = 0, handleRemove, handleIncrementCounter})
     const quantidade = refAmt.current.value;
     const data = {
       nameProduto: name,
-        vvProduto: vvProduto,
-        vcProduto: vcProduto,
-        quantidade: quantidade,
+      vvProduto: vvProduto,
+      vcProduto: vcProduto,
+      quantidade: quantidade,
     }
     const init  = {
       method: 'POST',
